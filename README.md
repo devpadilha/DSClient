@@ -1,4 +1,4 @@
-# DSProject
+# DSClient
 Sistema de auxílio para deslocamento a pé de pessoas com baixa visão (SADPPBV) desenvolvido para a disciplina AS51 ministrado pelo prof. Richard Duarte Ribeiro na UTFPR/PG.
 ### Desenvolvido por:
 Augusto Forte Padilha
