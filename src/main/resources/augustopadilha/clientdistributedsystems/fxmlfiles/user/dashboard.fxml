@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" stylesheets="@../../style/dashboard.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.user.DashboardController">
+    <Text fx:id="user_name" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="user_name" text="Olá, Augusto. Você está logado!" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="30.0" />
+    <Label fx:id="date_lbl" styleClass="date_lbl" text="Hoje, 15/11/2023" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="27.0" />
+</AnchorPane>

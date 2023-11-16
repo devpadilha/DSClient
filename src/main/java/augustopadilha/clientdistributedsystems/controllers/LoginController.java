@@ -1,9 +1,10 @@
 package augustopadilha.clientdistributedsystems.controllers;
 
-import augustopadilha.clientdistributedsystems.models.Model;
-import augustopadilha.clientdistributedsystems.system.JsonHandler;
+import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
+import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
 import augustopadilha.clientdistributedsystems.system.utilities.Token;
+import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -49,8 +50,8 @@ public class LoginController implements Initializable {
     }
 
     private void onRegister() {
-        Model.getInstance().getViewFactory().closeStage((Stage) login_button.getScene().getWindow());
-        Model.getInstance().getViewFactory().showRegisterWindow();
+        ViewFactory.getInstance().closeStage((Stage) login_button.getScene().getWindow());
+        ViewFactory.getInstance().showRegisterWindow();
     }
 
     private void onLogin() throws Exception {
@@ -62,7 +63,7 @@ public class LoginController implements Initializable {
         String password = password_field.getText();
 
         // Valida o email e a senha
-        if (UserCredentialsController.validate(email, password)) {
+        if (UserCredentialsValidator.validate(email, password)) {
             // Criptografa a senha usando MD5
             password = DigestUtils.md5Hex(password).toUpperCase();
 
@@ -71,9 +72,9 @@ public class LoginController implements Initializable {
 
             // Verifica se a resposta do servidor não é nula
             if (response != null) {
-                JsonHandler receiver = new JsonHandler(JsonHandler.parseJson(response));
+                ReceiveData receiver = new ReceiveData(ReceiveData.stringToMap(response));
                 if (receiver.getError()) {
-                    Model.getInstance().getViewFactory().showErrorMessage(receiver.getMessage());
+                    ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
                 } else {
                     // Obtém a janela atual e salva o token JWT
                     Stage stage = (Stage) error_label.getScene().getWindow();
@@ -81,21 +82,32 @@ public class LoginController implements Initializable {
 
                     // Verifica se o token JWT pertence a um administrador para abrir a janela correspondente
                     if (Token.isTokenAdmin(Token.getJwtToken())) {
-                        Model.getInstance().getViewFactory().showAdminWindow();
+                        ViewFactory.getInstance().showAdminWindow();
                     } else {
-                        Model.getInstance().getViewFactory().showUserWindow();
+                        ViewFactory.getInstance().showUserWindow();
                     }
 
                     // Fecha a janela de login
-                    Model.getInstance().getViewFactory().closeStage(stage);
+                    ViewFactory.getInstance().closeStage(stage);
                 }
             } else {
-                Model.getInstance().getViewFactory().showErrorMessage("Erro ao conectar com o servidor");
+                ViewFactory.getInstance().showErrorMessage("Erro ao conectar com o servidor");
             }
         } else {
-            Model.getInstance().getViewFactory().showErrorMessage("Dados inválidos");
+            ViewFactory.getInstance().showErrorMessage("Dados inválidos");
         }
     }
+    private void setError_label(String message) {
+        error_label.setText(message);
+    }
+
+
+
+
+
+
+
+
     public static String perform(Socket socket) throws IOException {
         BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         try {
@@ -103,11 +115,11 @@ public class LoginController implements Initializable {
             System.out.println("Email: ");
             String email = stdIn.readLine();
             // Validar formato do email
-            if (!UserCredentialsController.isValidEmailFormat(email)) {
+            if (!UserCredentialsValidator.isEmailValid(email)) {
                 do {
                     System.out.println("Email inválido. Por favor, insira um e-mail válido.");
                     email = stdIn.readLine();
-                } while (!UserCredentialsController.isValidEmailFormat(email));
+                } while (!UserCredentialsValidator.isEmailValid(email));
             }
             System.out.println("Senha: ");
             String password = PasswordHashController.passwordMD5(stdIn.readLine());
@@ -143,9 +155,5 @@ public class LoginController implements Initializable {
             System.err.println("Couldn't get I/O: " + e.getMessage());
         }
         return null; // Retornar o token obtido ou nulo se o login falhar
-    }
-
-    private void setError_label(String message) {
-        error_label.setText(message);
     }
 }

@@ -1,28 +1,26 @@
 package augustopadilha.clientdistributedsystems;
 
 import augustopadilha.clientdistributedsystems.models.ConnectionModel;
-import augustopadilha.clientdistributedsystems.models.Model;
 import augustopadilha.clientdistributedsystems.system.connection.Connection;
+import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 
 public class JavaFXApp extends Application {
     private static Connection connection = new Connection();
-    private static JavaFXApp instance;
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        instance = this;
         openConnectWindow();
     }
 
+    public static void main(String[] args) {
+        launch();
+    }
+
     public static void openConnectWindow() {
-        Model.getInstance().getViewFactory().showConnectWindow();
+        ViewFactory.getInstance().showConnectWindow();
     }
 
     public static ConnectionModel openConnection(String ip, String port) {

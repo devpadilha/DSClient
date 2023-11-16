@@ -1,5 +1,6 @@
 package augustopadilha.clientdistributedsystems.controllers;
 
+import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -74,11 +75,11 @@ public class RequestEditController {
                     System.out.println("Digite o novo email: ");
                     email = stdIn.readLine();
                     // Validar formato do email
-                    if (!UserCredentialsController.isValidEmailFormat(email)) {
+                    if (!UserCredentialsValidator.isEmailValid(email)) {
                         do {
                             System.out.println("Email inválido. Por favor, insira um e-mail válido.");
                             email = stdIn.readLine();
-                        } while (!UserCredentialsController.isValidEmailFormat(email));
+                        } while (!UserCredentialsValidator.isEmailValid(email));
                     }
                 }
                 System.out.println("Deseja editar senha? (S/N)");

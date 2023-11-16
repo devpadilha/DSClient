@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="augustopadilha.clientdistributedsystems.controllers.user.UserController">
+
+    <left>
+        <fx:include source="usermenu.fxml"/>
+    </left>
+
+    <center>
+        <fx:include source="dashboard.fxml"/>
+    </center>
+
+</BorderPane>

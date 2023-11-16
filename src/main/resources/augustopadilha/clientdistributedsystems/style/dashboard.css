@@ -1,0 +1,14 @@
+.dashboard {
+    background-color: #EEEEEE;
+}
+
+.user_name {
+    font-size: 2.6em;
+    font-family: "Calibri Light";
+}
+
+.date_lbl {
+    -fx-text-fill: #AAAAAA;
+    font-size: 1.1em;
+    font-family: "Calibri Light";
+}

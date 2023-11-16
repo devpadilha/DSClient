@@ -1,5 +1,6 @@
 package augustopadilha.clientdistributedsystems.controllers;
 
+import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ public class RegistrationController {
             System.out.println("Email: ");
             String email = stdIn.readLine();
             // Validar formato do email
-            while (!UserCredentialsController.isValidEmailFormat(email)) {
+            while (!UserCredentialsValidator.isEmailValid(email)) {
                 System.out.println("Email inválido. Por favor, insira um e-mail válido.");
                 email = stdIn.readLine();
             }

@@ -1,9 +1,12 @@
 module augustopadilha.clientdistributedsystems {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    requires org.controlsfx.controls;
+    requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.codec;
     requires org.xerial.sqlitejdbc;
-    requires javafx.controls;
-    requires javafx.fxml;
     requires de.jensd.fx.glyphs.fontawesome;
     requires java.desktop;
     requires jjwt.api;
@@ -11,10 +14,13 @@ module augustopadilha.clientdistributedsystems {
 
     opens augustopadilha.clientdistributedsystems to javafx.fxml;
     opens augustopadilha.clientdistributedsystems.controllers to javafx.fxml;
+    opens augustopadilha.clientdistributedsystems.system.connection to javafx.fxml;
+
     exports augustopadilha.clientdistributedsystems;
     exports augustopadilha.clientdistributedsystems.controllers;
     exports augustopadilha.clientdistributedsystems.controllers.admin;
-    exports augustopadilha.clientdistributedsystems.controllers.comum;
+    exports augustopadilha.clientdistributedsystems.controllers.user;
     exports augustopadilha.clientdistributedsystems.models;
     exports augustopadilha.clientdistributedsystems.views;
+    exports augustopadilha.clientdistributedsystems.system.connection;
 }

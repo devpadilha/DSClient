@@ -2,7 +2,7 @@ package augustopadilha.clientdistributedsystems.controllers;
 
 import augustopadilha.clientdistributedsystems.JavaFXApp;
 import augustopadilha.clientdistributedsystems.models.ConnectionModel;
-import augustopadilha.clientdistributedsystems.models.Model;
+import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,12 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 
 public class ConnectController implements Initializable {
@@ -42,8 +37,8 @@ public class ConnectController implements Initializable {
                     try {
                         JavaFXApp.getConnection().connect(ip, port);
 
-                        Model.getInstance().getViewFactory().closeStage((Stage) button_connect.getScene().getWindow());
-                        Model.getInstance().getViewFactory().showLoginWindow();
+                        ViewFactory.getInstance().closeStage((Stage) button_connect.getScene().getWindow());
+                        ViewFactory.getInstance().showLoginWindow();
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
