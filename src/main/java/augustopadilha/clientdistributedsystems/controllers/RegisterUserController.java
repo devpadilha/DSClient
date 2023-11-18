@@ -4,6 +4,7 @@ import augustopadilha.clientdistributedsystems.system.connection.UserCredentials
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,10 +46,10 @@ public class RegisterUserController implements Initializable {
             String password = DigestUtils.md5Hex(password_field.getText()).toUpperCase();
 
             if (UserCredentialsValidator.registerUserIsValid(name, email, password, "user")) {
-                String response = sender.sendRegisterData(name, email, password, "user");
+                JsonNode response = sender.sendAutoRegisterData(name, email, password, "user");
 
                 if (response != null) {
-                    ReceiveData receiver = new ReceiveData(ReceiveData.stringToMap(response));
+                    ReceiveData receiver = new ReceiveData(response);
 
                     if (receiver.getError()) {
                         ViewFactory.getInstance().showErrorMessage(receiver.getMessage());

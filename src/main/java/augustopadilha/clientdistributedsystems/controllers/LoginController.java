@@ -5,7 +5,7 @@ import augustopadilha.clientdistributedsystems.system.connection.SendData;
 import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
 import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,19 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
-
-import static augustopadilha.clientdistributedsystems.App.getResponse;
-import static augustopadilha.clientdistributedsystems.App.parseJson;
-import static augustopadilha.clientdistributedsystems.controllers.RequestController.sendRequest;
 
 public class LoginController implements Initializable {
     public TextField email_field;
@@ -68,11 +57,11 @@ public class LoginController implements Initializable {
             password = DigestUtils.md5Hex(password).toUpperCase();
 
             // Envia os dados de login para o servidor
-            String response = sender.sendLoginData(email, password);
+            JsonNode response = sender.sendLoginData(email, password);
 
             // Verifica se a resposta do servidor não é nula
             if (response != null) {
-                ReceiveData receiver = new ReceiveData(ReceiveData.stringToMap(response));
+                ReceiveData receiver = new ReceiveData(response);
                 if (receiver.getError()) {
                     ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
                 } else {
@@ -97,63 +86,8 @@ public class LoginController implements Initializable {
             ViewFactory.getInstance().showErrorMessage("Dados inválidos");
         }
     }
+
     private void setError_label(String message) {
         error_label.setText(message);
-    }
-
-
-
-
-
-
-
-
-    public static String perform(Socket socket) throws IOException {
-        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            System.out.println(" **************** - LOGIN - ****************");
-            System.out.println("Email: ");
-            String email = stdIn.readLine();
-            // Validar formato do email
-            if (!UserCredentialsValidator.isEmailValid(email)) {
-                do {
-                    System.out.println("Email inválido. Por favor, insira um e-mail válido.");
-                    email = stdIn.readLine();
-                } while (!UserCredentialsValidator.isEmailValid(email));
-            }
-            System.out.println("Senha: ");
-            String password = PasswordHashController.passwordMD5(stdIn.readLine());
-
-            // Criar o JSON para o login
-            Map<String, Object> jsonMapLogin = new HashMap<>();
-            jsonMapLogin.put("action", "login");
-
-            Map<String, String> dataMapLogin = new HashMap<>();
-            dataMapLogin.put("email", email);
-            dataMapLogin.put("password", password);
-            jsonMapLogin.put("data", dataMapLogin);
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            // Enviar o JSON de login para o servidor
-            PrintWriter outToServerLogin = new PrintWriter(socket.getOutputStream(), true);
-            String jsonRequestLogin = objectMapper.writeValueAsString(jsonMapLogin);
-            sendRequest(outToServerLogin, jsonRequestLogin);
-
-            // Receber JSON de resposta do servidor
-            BufferedReader inFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String serverResponse = getResponse(inFromServer);
-            System.out.println("JSON recebido: " + serverResponse + "\n");
-            Map<String, Object> jsonMap = parseJson(serverResponse);
-            boolean error = (boolean) jsonMap.get("error");
-
-            if (!error) {
-                Map<String, String> userData = (Map<String, String>) jsonMap.get("data");
-                return userData.get("token");
-            }
-
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O: " + e.getMessage());
-        }
-        return null; // Retornar o token obtido ou nulo se o login falhar
     }
 }

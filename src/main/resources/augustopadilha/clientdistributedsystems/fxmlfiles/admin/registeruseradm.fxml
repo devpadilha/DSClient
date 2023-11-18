@@ -10,8 +10,9 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="create_client_container" stylesheets="@../../style/registeruser.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.admin.RegisterUserAdmController">
-    <Text layoutX="24.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registar novo usuário" />
-    <VBox fillWidth="false" layoutX="24.0" layoutY="53.0" prefHeight="700.0" prefWidth="600.0">
+   <VBox layoutX="14.0" prefHeight="20.0" prefWidth="21.0" AnchorPane.leftAnchor="14.0" />
+    <Text layoutX="24.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title_text" text="Registar novo usuário" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="20.0" />
+    <VBox fillWidth="false" layoutX="24.0" layoutY="65.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="675.0" prefWidth="600.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="55.0">
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nome" />
         <TextField fx:id="name_field" />
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />

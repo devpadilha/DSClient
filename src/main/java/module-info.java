@@ -14,7 +14,10 @@ module augustopadilha.clientdistributedsystems {
 
     opens augustopadilha.clientdistributedsystems to javafx.fxml;
     opens augustopadilha.clientdistributedsystems.controllers to javafx.fxml;
+    opens augustopadilha.clientdistributedsystems.controllers.admin to javafx.fxml;
+    opens augustopadilha.clientdistributedsystems.controllers.user to javafx.fxml;
     opens augustopadilha.clientdistributedsystems.system.connection to javafx.fxml;
+    opens augustopadilha.clientdistributedsystems.models to com.fasterxml.jackson.databind;
 
     exports augustopadilha.clientdistributedsystems;
     exports augustopadilha.clientdistributedsystems.controllers;
@@ -22,5 +25,7 @@ module augustopadilha.clientdistributedsystems {
     exports augustopadilha.clientdistributedsystems.controllers.user;
     exports augustopadilha.clientdistributedsystems.models;
     exports augustopadilha.clientdistributedsystems.views;
+    exports augustopadilha.clientdistributedsystems.system;
     exports augustopadilha.clientdistributedsystems.system.connection;
+    exports augustopadilha.clientdistributedsystems.system.utilities;
 }

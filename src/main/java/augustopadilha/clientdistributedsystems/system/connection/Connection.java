@@ -33,7 +33,7 @@ public class Connection {
                 writer.println(message);
                 // Get the response from the server
                 if((response = reader.readLine()) != null) {
-                    System.out.println("Json recebido: " + response);
+                    System.out.println("Json recebido: " + response + "\n");
                 }
             } catch (IOException e) {
                 System.err.println("Erro ao enviar mensagem para o servidor: " + e.getMessage());

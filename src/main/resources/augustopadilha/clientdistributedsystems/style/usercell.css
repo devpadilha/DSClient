@@ -1,20 +1,20 @@
-.create_client_container {
+.cell_container {
     -fx-background-color: #EEEEEE;
 }
 
-.create_client_container Text {
+.cell_container Text {
     -fx-font-size: 1.2em;
     -fx-fill: #888888;
 }
 
-.create_client_container VBox {
+.cell_container VBox {
     -fx-border-width: 0 0 0 1;
     -fx-border-color: #000000;
     -fx-padding: 10;
     -fx-spacing: 15;
 }
 
-.create_client_container TextField {
+.cell_container TextField {
     -fx-pref-width: 250;
     -fx-pref-height: 35;
     -fx-background-color: #FFFFFF;
@@ -22,26 +22,16 @@
     -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
 }
 
-.create_client_container Button {
+.cell_container Button {
     -fx-background-color: linear-gradient(to right, #1A2D3D, #32495C);
     -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
-    -fx-pref-width: 250;
+    -fx-pref-width: 200;
     -fx-pref-height: 35;
     -fx-text-fill: #FFFFFF;
     -fx-font-size: 1.5em;
     -fx-font-family: "Calibri Light";
 }
 
-.create_client_container Button:hover {
+.cell_container Button:hover {
     -fx-cursor: hand;
-}
-
-.error_label {
-    -fx-text-fill: #FF0000;
-}
-
-.title_text {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
-    -fx-fill: #32495CFF;
 }

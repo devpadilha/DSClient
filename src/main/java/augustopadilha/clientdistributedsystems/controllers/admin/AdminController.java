@@ -10,19 +10,30 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
     public BorderPane admin_parent;
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ViewFactory.getInstance().getAdminSelectedMenuItem().addListener((observableValue, oldValue, newValue) -> {
+    public void initialize(URL location, ResourceBundle resources) {
+        ViewFactory.getInstance().getSelectedMenuItem().addListener((observable, oldValue, newValue) -> {
+            ViewFactory.getInstance().resetAllAnchorPanes();
             switch (newValue) {
-                case REGISTER_USER:
-                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterUserView());
-                    break;
                 case USERS_LIST:
                     admin_parent.setCenter(ViewFactory.getInstance().getUsersListView());
                     break;
                 case PROFILE:
                     admin_parent.setCenter(ViewFactory.getInstance().getProfileView());
                     break;
+                case EDIT_USER:
+                    //admin_parent.setCenter(ViewFactory.getInstance().getEditUserView());
+                    break;
+                case DELETE_USER:
+                    //admin_parent.setCenter(ViewFactory.getInstance().getDeleteUserView());
+                    break;
+                case EDIT_USER_ADM:
+                    //admin_parent.setCenter(ViewFactory.getInstance().getEditUserAdmView());
+                    break;
+                case DELETE_USER_ADM:
+                    //admin_parent.setCenter(ViewFactory.getInstance().getDeleteUserAdmView());
+                    break;
                 default:
+                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterUserView());
                     break;
             }
         });

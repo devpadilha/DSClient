@@ -3,7 +3,9 @@ package augustopadilha.clientdistributedsystems.controllers.admin;
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
 import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
+import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,7 +18,7 @@ public class RegisterUserAdmController implements Initializable {
     public TextField name_field;
     public TextField email_field;
     public PasswordField password_field;
-    public ChoiceBox account_selector;
+    public ChoiceBox<String> account_selector;
     public Button register_button;
     public Label error_label;
 
@@ -35,16 +37,16 @@ public class RegisterUserAdmController implements Initializable {
 
     private void onRegister() throws Exception {
         SendData sender = new SendData();
-        String userType = account_selector.getValue().toString().equals("Administrador") ? "admin" : "user";
+        System.out.println(account_selector.getValue());//account_selector.getValue();
+        String userType = account_selector.getValue().equals("Administrador") ? "admin" : "user";
         String name = name_field.getText();
         String email = email_field.getText();
         String password = password_field.getText();
         if (UserCredentialsValidator.registerUserIsValid(name, email, password, userType)) {
             password = DigestUtils.md5Hex(password).toUpperCase();
-            String response = sender.sendRegisterData(name, email, password, userType);
-            if (response != null)
-            {
-                ReceiveData receiver = new ReceiveData(ReceiveData.stringToMap(response));
+            JsonNode response = sender.sendRegisterData(Token.getJwtToken(), name, email, password, userType);
+            if (response != null) {
+                ReceiveData receiver = new ReceiveData(response);
                 if (receiver.getError()) {
                     ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
                 } else {

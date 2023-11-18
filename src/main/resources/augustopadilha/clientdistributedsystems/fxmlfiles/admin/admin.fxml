@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="augustopadilha.clientdistributedsystems.controllers.admin.AdminController"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane fx:id="admin_parent" prefHeight="750.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.admin.AdminController">
     <left>
-        <fx:include source="adminmenu.fxml"/>
+        <fx:include source="adminmenu.fxml" />
     </left>
 
     <center>
-        <fx:include source="registeruseradm.fxml"/>
+        <fx:include source="registeruseradm.fxml" />
     </center>
 
 </BorderPane>

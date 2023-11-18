@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class UserCredentialsValidator {
     public static boolean isEmailValid(String email) {
-        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String regex = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         return pattern.matcher(email).matches();
     }
@@ -36,7 +36,11 @@ public class UserCredentialsValidator {
             throw  new Exception("Nome é obrigatório");
         }
 
-        if (isEmailValid(email)) {
+        if (email == null || email.isEmpty()) {
+            throw  new Exception("E-mail é obrigatório");
+        }
+
+        if (!isEmailValid(email)) {
             throw  new Exception("E-mail inválido");
         }
 
@@ -44,9 +48,6 @@ public class UserCredentialsValidator {
             throw  new Exception("Senha é obrigatório");
         }
 
-        if (isEmailValid(email)) {
-            throw new Exception("E-mail inválido.");
-        }
         if (isPasswordValid(password)) {
             throw new Exception("Senha deve ter 6 dígitos");
         }

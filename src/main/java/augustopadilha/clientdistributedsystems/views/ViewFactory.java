@@ -1,7 +1,13 @@
 package augustopadilha.clientdistributedsystems.views;
 
+import augustopadilha.clientdistributedsystems.models.User;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -11,24 +17,26 @@ import javax.swing.*;
 
 public class ViewFactory {
     private static ViewFactory viewFactory = null;
+    private ObservableList<User> clients = null;
     private boolean loginAccountType;
     private AnchorPane profileView;
+    private User clientUser;
+
+    private User user;
+
+    // Common views
+    private final ObjectProperty<MenuOptions> SelectedMenuItem;
 
     // Client views
-    private final ObjectProperty<UserMenuOptions> userSelectedMenuItem;
     private AnchorPane dashboardView;
-    /* ----------------- */
 
     // Admin views
-    private final ObjectProperty<AdminMenuOptions> adminSelectedMenuItem;
     private AnchorPane registerUserView;
     private AnchorPane usersListView;
-    /* ----------------- */
 
     public ViewFactory() {
         this.loginAccountType = false;
-        this.userSelectedMenuItem = new SimpleObjectProperty<>();
-        this.adminSelectedMenuItem = new SimpleObjectProperty<>();
+        this.SelectedMenuItem = new SimpleObjectProperty<>();
     }
     /* Funções para criar, mostrar e fechar janelas */
     private void createStage(FXMLLoader loader, String title) {
@@ -53,6 +61,10 @@ public class ViewFactory {
     /*--------------------------------------------------*/
 
     /* ---------------- Common views ------------------ */
+    public ObjectProperty<MenuOptions> getSelectedMenuItem() {
+        return SelectedMenuItem;
+    }
+
     public void showConnectWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/connect.fxml"));
         createStage(loader, "Conecte-se");
@@ -81,10 +93,6 @@ public class ViewFactory {
     /*-------------------------------------------------*/
 
     /*------------------ User views ------------------*/
-    public ObjectProperty<UserMenuOptions> getUserSelectedMenuItem() {
-        return userSelectedMenuItem;
-    }
-
     public void showUserWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/user/user.fxml"));
         createStage(loader, "Bem-vindo!");
@@ -106,10 +114,6 @@ public class ViewFactory {
     public void showAdminWindow() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/admin.fxml"));
         createStage(loader, "Bem-vindo!");
-    }
-
-    public ObjectProperty<AdminMenuOptions> getAdminSelectedMenuItem() {
-        return adminSelectedMenuItem;
     }
 
     public AnchorPane getRegisterUserView() {
@@ -142,5 +146,41 @@ public class ViewFactory {
             viewFactory = new ViewFactory();
         }
         return viewFactory;
+    }
+
+    public ObservableList<User> getClients() {
+        if (clients == null) {
+            clients = FXCollections.observableArrayList();
+        }
+        return clients;
+    }
+
+    public void setClients(JsonNode jsonNode) throws JsonProcessingException {
+        if (jsonNode != null && jsonNode.isArray()) {
+            ObservableList<User> users = FXCollections.observableArrayList( );
+            ObjectMapper objectMapper = new ObjectMapper();
+            for (JsonNode clientNode : jsonNode) {
+                User client = objectMapper.treeToValue(clientNode, User.class);
+                users.add(client);
+            }
+            this.clients = users;
+        }
+    }
+
+    public void resetAllAnchorPanes() {
+        profileView = null;
+        //editUserView = null;
+        //deleteUserView = null;
+        registerUserView = null;
+        usersListView = null;
+        //editUserADMView = null;
+        //deleteUserADMView = null;
+    }
+
+    public void setClientUser(User clientUser) {
+        this.clientUser = clientUser;
+    }
+    public void setUser(User user) {
+        this.user = user;
     }
 }

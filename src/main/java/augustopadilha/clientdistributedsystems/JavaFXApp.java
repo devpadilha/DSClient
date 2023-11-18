@@ -11,7 +11,7 @@ public class JavaFXApp extends Application {
     private static Connection connection = new Connection();
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         openConnectWindow();
     }
 

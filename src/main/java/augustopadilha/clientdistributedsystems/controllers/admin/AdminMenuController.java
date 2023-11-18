@@ -3,9 +3,10 @@ package augustopadilha.clientdistributedsystems.controllers.admin;
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
 import augustopadilha.clientdistributedsystems.system.utilities.Token;
-import augustopadilha.clientdistributedsystems.views.AdminMenuOptions;
+import augustopadilha.clientdistributedsystems.views.MenuOptions;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -24,7 +25,13 @@ public class AdminMenuController implements Initializable {
 
     private void addListeners(){
         user_register_button.setOnAction(event -> onRegisterUser ());
-        users_btn.setOnAction(event -> onUsersList());
+        users_btn.setOnAction(event -> {
+            try {
+                onUsersList();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
         logout_btn.setOnAction(event -> {
             try {
                 onLogout();
@@ -32,39 +39,61 @@ public class AdminMenuController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
-        // profile_btn.setOnAction(event -> onProfile());
+        profile_btn.setOnAction(event -> {
+            try {
+                onProfile();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     private void onRegisterUser() {
-        ViewFactory.getInstance().getAdminSelectedMenuItem().set(AdminMenuOptions.REGISTER_USER);
+        ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.REGISTER_USER);
     }
 
-    private void onUsersList() {
-        ViewFactory.getInstance().getAdminSelectedMenuItem().set(AdminMenuOptions.USERS_LIST);
+    private void onUsersList() throws JsonProcessingException {
+        SendData sender = new SendData();
+        JsonNode response = sender.sendClientListData(Token.getJwtToken());
+        if (response != null) {
+            ReceiveData receiver = new ReceiveData(response);
+            if (receiver.getError()) {
+                ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
+            } else {
+                receiver.getClientList();
+                ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.USERS_LIST);
+            }
+        }
     }
 
-    private void onProfile() {
-        ViewFactory.getInstance().getAdminSelectedMenuItem().set(AdminMenuOptions.PROFILE);
+    private void onProfile() throws JsonProcessingException {
+        SendData sender = new SendData();
+        JsonNode response = sender.sendProfileData(Token.getJwtToken());
+        if (response != null) {
+            ReceiveData receiver = new ReceiveData(response);
+            if (receiver.getError()) {
+                ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
+            } else {
+                receiver.getUser();
+                ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.PROFILE);
+            }
+        }
     }
 
     public void onLogout() throws JsonProcessingException {
         Stage stage = (Stage) logout_btn.getScene().getWindow();
 
         SendData sender = new SendData();
-        String response = sender.sendLogoutData(Token.getJwtToken());
+        JsonNode response = sender.sendLogoutData(Token.getJwtToken());
         if (response != null) {
-            try {
-                 ReceiveData receiver = new ReceiveData(ReceiveData.stringToMap(response));
-                 if (receiver.getError()) {
-                     ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
-                 } else {
-                     Token.eraseJwtToken();
-                     ViewFactory.getInstance().showLoginWindow();
-                     ViewFactory.getInstance().closeStage(stage);
-                 }
-             } catch (JsonProcessingException e) {
-                ViewFactory.getInstance().showErrorMessage(e.getMessage());
-             }
-         }
+            ReceiveData receiver = new ReceiveData(response);
+            if (receiver.getError()) {
+                ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
+            } else {
+                Token.eraseJwtToken();
+                ViewFactory.getInstance().showLoginWindow();
+                ViewFactory.getInstance().closeStage(stage);
+            }
+        }
     }
 }
