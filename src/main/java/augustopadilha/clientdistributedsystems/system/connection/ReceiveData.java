@@ -54,12 +54,8 @@ public class ReceiveData {
         }
     }
 
-    public void getUser() throws JsonProcessingException {
-        JsonNode rootNode = jackson.readTree(data.toString());
-        if (data.has("user")) {
-            JsonNode jsonNode = rootNode.get("user");
-            User tmpUser = new User(jsonNode.get("name").asText(), jsonNode.get("email").asText(), jsonNode.get("type").asText(), jsonNode.get("id").asInt());
-            ViewFactory.getInstance().setUser(tmpUser);
-        }
+    public void getUserData() throws JsonProcessingException {
+        JsonNode jsonNode = jackson.readTree(data.toString());
+        ViewFactory.getInstance().setUser(jsonNode.get("user"));
     }
 }

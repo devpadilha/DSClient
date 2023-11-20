@@ -1,4 +1,4 @@
-package augustopadilha.clientdistributedsystems.system.connection;
+package augustopadilha.clientdistributedsystems.system.utilities;
 
 import java.util.regex.Pattern;
 

@@ -20,9 +20,10 @@ public class ViewFactory {
     private ObservableList<User> clients = null;
     private boolean loginAccountType;
     private AnchorPane profileView;
+    private AnchorPane editUserView;
+    private AnchorPane deleteUserView;
     private User clientUser;
-
-    private User user;
+    private User user = null;
 
     // Common views
     private final ObjectProperty<MenuOptions> SelectedMenuItem;
@@ -38,6 +39,7 @@ public class ViewFactory {
         this.loginAccountType = false;
         this.SelectedMenuItem = new SimpleObjectProperty<>();
     }
+
     /* Funções para criar, mostrar e fechar janelas */
     private void createStage(FXMLLoader loader, String title) {
         Scene scene = null;
@@ -83,12 +85,34 @@ public class ViewFactory {
     public AnchorPane getProfileView() {
         if (profileView == null) {
             try {
-                profileView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/profile.fxml")).load();
+                profileView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/profile.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return profileView;
+    }
+
+    public AnchorPane getEditUserView() {
+        if (editUserView == null) {
+            try {
+                editUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/edituser.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return editUserView;
+    }
+
+    public AnchorPane getDeleteUserView() {
+        if (deleteUserView == null) {
+            try {
+                deleteUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/deleteuser.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return deleteUserView;
     }
     /*-------------------------------------------------*/
 
@@ -137,10 +161,12 @@ public class ViewFactory {
         }
         return usersListView;
     }
+
     /*-------------------------------------------------*/
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
     }
+
     public static synchronized ViewFactory getInstance() {
         if (viewFactory == null) {
             viewFactory = new ViewFactory();
@@ -157,7 +183,7 @@ public class ViewFactory {
 
     public void setClients(JsonNode jsonNode) throws JsonProcessingException {
         if (jsonNode != null && jsonNode.isArray()) {
-            ObservableList<User> users = FXCollections.observableArrayList( );
+            ObservableList<User> users = FXCollections.observableArrayList();
             ObjectMapper objectMapper = new ObjectMapper();
             for (JsonNode clientNode : jsonNode) {
                 User client = objectMapper.treeToValue(clientNode, User.class);
@@ -167,10 +193,24 @@ public class ViewFactory {
         }
     }
 
+    public User getUser() {
+        if(user == null) {
+            user = new User();
+        }
+        return user;
+    }
+
+    public void setUser(JsonNode jsonNode) throws JsonProcessingException {
+        if (jsonNode != null) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            this.user = objectMapper.treeToValue(jsonNode, User.class);
+        }
+    }
+
     public void resetAllAnchorPanes() {
         profileView = null;
-        //editUserView = null;
-        //deleteUserView = null;
+        editUserView = null;
+        deleteUserView = null;
         registerUserView = null;
         usersListView = null;
         //editUserADMView = null;
@@ -179,8 +219,5 @@ public class ViewFactory {
 
     public void setClientUser(User clientUser) {
         this.clientUser = clientUser;
-    }
-    public void setUser(User user) {
-        this.user = user;
     }
 }

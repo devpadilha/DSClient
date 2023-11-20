@@ -2,7 +2,7 @@ package augustopadilha.clientdistributedsystems.controllers;
 
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
-import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
+import augustopadilha.clientdistributedsystems.system.utilities.UserCredentialsValidator;
 import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.databind.JsonNode;

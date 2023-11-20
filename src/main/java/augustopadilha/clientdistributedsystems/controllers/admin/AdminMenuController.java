@@ -19,6 +19,7 @@ public class AdminMenuController implements Initializable {
     public Button users_btn;
     public Button profile_btn;
     public Button logout_btn;
+    public static JsonNode response;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) { addListeners(); }
@@ -68,13 +69,13 @@ public class AdminMenuController implements Initializable {
 
     private void onProfile() throws JsonProcessingException {
         SendData sender = new SendData();
-        JsonNode response = sender.sendProfileData(Token.getJwtToken());
+        response = sender.sendProfileData(Token.getJwtToken());
         if (response != null) {
             ReceiveData receiver = new ReceiveData(response);
+            receiver.getUserData();
             if (receiver.getError()) {
                 ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
             } else {
-                receiver.getUser();
                 ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.PROFILE);
             }
         }
@@ -95,5 +96,9 @@ public class AdminMenuController implements Initializable {
                 ViewFactory.getInstance().closeStage(stage);
             }
         }
+    }
+
+    public static JsonNode getResponse() {
+        return response;
     }
 }

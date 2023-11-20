@@ -1,0 +1,45 @@
+package augustopadilha.clientdistributedsystems.controllers.common;
+
+import augustopadilha.clientdistributedsystems.models.User;
+import augustopadilha.clientdistributedsystems.views.MenuOptions;
+import augustopadilha.clientdistributedsystems.views.ViewFactory;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ProfileController implements Initializable {
+
+    public Label name_lbl;
+    public Label email_lbl;
+    public Label id_lbl;
+    public Label type_lbl;
+    public Button edit_btn;
+    public Button delete_btn;
+
+    private User user;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = ViewFactory.getInstance().getUser();
+
+        name_lbl.setText(user.getName());
+        email_lbl.setText("Email: " + user.getEmail());
+        id_lbl.setText(String.valueOf("ID: " + user.getID()));
+        type_lbl.setText(user.getType());
+
+        edit_btn.setOnAction(event -> onEdit());
+        delete_btn.setOnAction(event -> onDelete());
+    }
+
+    private void onEdit() {
+        ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.EDIT_USER);
+    }
+
+    private void onDelete() {
+        ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.DELETE_USER);
+    }
+}

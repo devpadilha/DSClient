@@ -1,5 +1,7 @@
 package augustopadilha.clientdistributedsystems.models;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class User {
     private String name;
     private String email;
@@ -32,4 +34,19 @@ public class User {
         return type;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

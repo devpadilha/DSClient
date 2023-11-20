@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="750.0" prefWidth="850.0" styleClass="separator" stylesheets="@../../style/profile.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.common.ProfileController">
+    <Line endX="-20.0" endY="600.0" layoutX="55.0" layoutY="-480.0" startX="-20.0" startY="1280.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0" />
+   <VBox layoutX="220.0" layoutY="65.0" prefHeight="620.0" prefWidth="410.0" styleClass="profile_container" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="220.0" AnchorPane.topAnchor="65.0">
+      <FontAwesomeIconView glyphName="USER_CIRCLE" size="200">
+         <VBox.margin>
+            <Insets left="105.0" right="105.0" />
+         </VBox.margin>
+      </FontAwesomeIconView>
+      <Label fx:id="name_lbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="410.0" text="Augusto" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="email_lbl" text="Email: fpadilha.augusto@gmail.com">
+         <VBox.margin>
+            <Insets left="30.0" top="30.0" />
+         </VBox.margin>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="id_lbl" text="ID: 1">
+         <font>
+            <Font size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets left="30.0" top="15.0" />
+         </VBox.margin>
+      </Label>
+      <Label fx:id="type_lbl" text="Tipo: Admin">
+         <VBox.margin>
+            <Insets left="30.0" top="15.0" />
+         </VBox.margin>
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="35.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets left="30.0" right="30.0" top="100.0" />
+         </VBox.margin>
+         <Button fx:id="edit_btn" mnemonicParsing="false" text="Editar Usuário" />
+         <Button fx:id="delete_btn" mnemonicParsing="false" styleClass="erase_button" text="Excluir Usuário">
+            <HBox.margin>
+               <Insets left="50.0" />
+            </HBox.margin>
+         </Button>
+      </HBox>
+   </VBox>
+</AnchorPane>

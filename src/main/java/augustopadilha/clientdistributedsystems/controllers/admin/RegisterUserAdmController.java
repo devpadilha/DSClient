@@ -2,7 +2,7 @@ package augustopadilha.clientdistributedsystems.controllers.admin;
 
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
-import augustopadilha.clientdistributedsystems.system.connection.UserCredentialsValidator;
+import augustopadilha.clientdistributedsystems.system.utilities.UserCredentialsValidator;
 import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -37,7 +37,7 @@ public class RegisterUserAdmController implements Initializable {
 
     private void onRegister() throws Exception {
         SendData sender = new SendData();
-        System.out.println(account_selector.getValue());//account_selector.getValue();
+        System.out.println(account_selector.getValue());
         String userType = account_selector.getValue().equals("Administrador") ? "admin" : "user";
         String name = name_field.getText();
         String email = email_field.getText();
