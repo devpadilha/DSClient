@@ -1,4 +1,4 @@
-package augustopadilha.clientdistributedsystems.controllers;
+package augustopadilha.clientdistributedsystems.controllers.unlogged;
 
 import augustopadilha.clientdistributedsystems.system.utilities.UserCredentialsValidator;
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;

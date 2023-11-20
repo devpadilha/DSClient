@@ -1,6 +1,6 @@
-package augustopadilha.clientdistributedsystems.controllers;
+package augustopadilha.clientdistributedsystems.controllers.unlogged;
 
-import augustopadilha.clientdistributedsystems.JavaFXApp;
+import augustopadilha.clientdistributedsystems.App;
 import augustopadilha.clientdistributedsystems.models.ConnectionModel;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import javafx.application.Platform;
@@ -25,7 +25,7 @@ public class ConnectController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         tf_ip.setText("localhost");
         tf_port.setText("23000");
-        button_connect.setOnAction(event -> openDialog(JavaFXApp.openConnection(tf_ip.getText(), tf_port.getText())));
+        button_connect.setOnAction(event -> openDialog(App.openConnection(tf_ip.getText(), tf_port.getText())));
     }
 
     public void openDialog(ConnectionModel result) {
@@ -35,7 +35,7 @@ public class ConnectController implements Initializable {
                     String ip = result.getIp();
                     String port = result.getPort();
                     try {
-                        JavaFXApp.getConnection().connect(ip, port);
+                        App.getConnection().connect(ip, port);
 
                         ViewFactory.getInstance().closeStage((Stage) button_connect.getScene().getWindow());
                         ViewFactory.getInstance().showLoginWindow();
@@ -44,7 +44,7 @@ public class ConnectController implements Initializable {
                     }
                 }
                 else {
-                    JavaFXApp.openConnectWindow();
+                    App.openConnectWindow();
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);

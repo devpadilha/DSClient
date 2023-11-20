@@ -1,4 +1,4 @@
-package augustopadilha.clientdistributedsystems.controllers;
+package augustopadilha.clientdistributedsystems.controllers.unlogged;
 
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;

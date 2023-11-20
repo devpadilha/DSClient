@@ -13,7 +13,6 @@ module augustopadilha.clientdistributedsystems {
     requires java.sql;
 
     opens augustopadilha.clientdistributedsystems to javafx.fxml;
-    opens augustopadilha.clientdistributedsystems.controllers to javafx.fxml;
     opens augustopadilha.clientdistributedsystems.controllers.admin to javafx.fxml;
     opens augustopadilha.clientdistributedsystems.controllers.user to javafx.fxml;
     opens augustopadilha.clientdistributedsystems.controllers.common to javafx.fxml;
@@ -22,12 +21,12 @@ module augustopadilha.clientdistributedsystems {
     opens augustopadilha.clientdistributedsystems.models to com.fasterxml.jackson.databind;
 
     exports augustopadilha.clientdistributedsystems;
-    exports augustopadilha.clientdistributedsystems.controllers;
     exports augustopadilha.clientdistributedsystems.controllers.admin;
     exports augustopadilha.clientdistributedsystems.controllers.user;
     exports augustopadilha.clientdistributedsystems.models;
     exports augustopadilha.clientdistributedsystems.views;
-    exports augustopadilha.clientdistributedsystems.system;
     exports augustopadilha.clientdistributedsystems.system.connection;
     exports augustopadilha.clientdistributedsystems.system.utilities;
+    exports augustopadilha.clientdistributedsystems.controllers.unlogged;
+    opens augustopadilha.clientdistributedsystems.controllers.unlogged to javafx.fxml;
 }

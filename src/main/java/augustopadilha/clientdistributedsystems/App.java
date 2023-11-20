@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 
-public class JavaFXApp extends Application {
+public class App extends Application {
     private static Connection connection = new Connection();
 
     @Override

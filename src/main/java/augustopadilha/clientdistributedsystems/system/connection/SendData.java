@@ -1,17 +1,14 @@
 package augustopadilha.clientdistributedsystems.system.connection;
 
-import augustopadilha.clientdistributedsystems.JavaFXApp;
+import augustopadilha.clientdistributedsystems.App;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SendData {
     private ObjectMapper objectMapper = new ObjectMapper();
-    Connection connection = JavaFXApp.getConnection();
+    Connection connection = App.getConnection();
     private JsonNode data;
 
     public JsonNode getData() {

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="400.0" stylesheets="@../style/login.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.RegisterUserController">
+<AnchorPane prefHeight="600.0" prefWidth="400.0" stylesheets="@../style/login.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.unlogged.RegisterUserController">
    <VBox prefHeight="200.0" prefWidth="400.0" styleClass="login_logo_container">
       <FontAwesomeIconView glyphName="BLIND" scaleX="2.0" scaleY="2.0" scaleZ="2.0" size="30" wrappingWidth="24.571428298950195" />
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SADPPBV" translateY="25.0" />

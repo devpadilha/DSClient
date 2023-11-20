@@ -147,7 +147,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                augustopadilha.clientdistributedsystems/augustopadilha.clientdistributedsystems.JavaFXApp
+                                augustopadilha.clientdistributedsystems/augustopadilha.clientdistributedsystems.App
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

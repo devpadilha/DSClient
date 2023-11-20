@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="create_client_container" stylesheets="@../style/connect.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.ConnectController">
+<AnchorPane prefHeight="600.0" prefWidth="400.0" styleClass="create_client_container" stylesheets="@../style/connect.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.unlogged.ConnectController">
    <children>
       <Button fx:id="button_connect" layoutX="75.0" layoutY="465.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="225.0" styleClass="create_client_container" stylesheets="@../style/connect.css" text="Conectar" />
       <TextField fx:id="tf_ip" layoutX="129.0" layoutY="140.0" styleClass="create_client_container" stylesheets="@../style/connect.css" />
