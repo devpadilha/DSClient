@@ -1,19 +1,26 @@
 package augustopadilha.clientdistributedsystems.views;
 
+import augustopadilha.clientdistributedsystems.controllers.common.DeleteUserController;
 import augustopadilha.clientdistributedsystems.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import javax.swing.*;
+import java.util.TimerTask;
 
 public class ViewFactory {
     private static ViewFactory viewFactory = null;
@@ -40,7 +47,7 @@ public class ViewFactory {
         this.SelectedMenuItem = new SimpleObjectProperty<>();
     }
 
-    /* Funções para criar, mostrar e fechar janelas */
+    /* Funções para criar e mostrar janela, e fechar janela */
     private void createStage(FXMLLoader loader, String title) {
         Scene scene = null;
         try {
@@ -68,17 +75,17 @@ public class ViewFactory {
     }
 
     public void showConnectWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/connect.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/unlogged/connect.fxml"));
         createStage(loader, "Conecte-se");
     }
 
     public void showLoginWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/unlogged/login.fxml"));
         createStage(loader, "Login");
     }
 
     public void showRegisterWindow() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/registeruser.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/unlogged/registeruser.fxml"));
         createStage(loader, "Registre-se");
     }
 
@@ -104,15 +111,25 @@ public class ViewFactory {
         return editUserView;
     }
 
-    public AnchorPane getDeleteUserView() {
-        if (deleteUserView == null) {
-            try {
-                deleteUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/deleteuser.fxml")).load();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public void showDeleteUserView(Stage profileStage) {
+        Stage deleteStage = new Stage();
+        deleteStage.initModality(Modality.APPLICATION_MODAL);
+        deleteStage.initOwner(profileStage);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/deleteuser.fxml"));
+            Parent root = loader.load();
+            DeleteUserController controller = loader.getController();
+            controller.setProfileStage(profileStage);
+
+            Scene scene = new Scene(root);
+            deleteStage.setScene(scene);
+            deleteStage.setTitle("Confirmar exclusão");
+            deleteStage.setResizable(false);
+            deleteStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return deleteUserView;
     }
     /*-------------------------------------------------*/
 

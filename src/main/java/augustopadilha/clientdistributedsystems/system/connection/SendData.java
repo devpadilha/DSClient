@@ -75,6 +75,14 @@ public class SendData {
         ((ObjectNode) data).put("password", password);
         return generateFinalData("autoedicao-usuario", data);
     }
+
+    public JsonNode generateDeleteSelfData (String token, String email, String password) throws JsonProcessingException {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("email", email);
+        ((ObjectNode) data).put("password", password);
+        return generateFinalData("excluir-proprio-usuario", data);
+    }
     /* --------------------------------------------------- */
 
     /* --------------------- Senders --------------------- */
@@ -142,6 +150,16 @@ public class SendData {
         String serverResponse = null;
         try {
             serverResponse = connection.send(objectMapper.writeValueAsString(generateEditSelfData(token, id, name, email, password)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendDeleteSelfData(String token, String email, String password) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateDeleteSelfData(token, email, password)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

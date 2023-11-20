@@ -26,7 +26,7 @@ public class UserCellController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        id_lbl.setText("ID: " + String.valueOf(client.getID()));
+        id_lbl.setText("ID: " + client.getID());
         name_lbl.setText("Nome: " + client.getName());
         type_lbl.setText("Tipo: " + (client.getType().equals("admin") ? "Administrador" : "Usuário"));
         email_lbl.setText("Email: " + client.getEmail());

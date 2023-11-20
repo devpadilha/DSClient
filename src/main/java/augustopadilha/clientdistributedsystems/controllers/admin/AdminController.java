@@ -23,9 +23,6 @@ public class AdminController implements Initializable {
                 case EDIT_USER:
                     admin_parent.setCenter(ViewFactory.getInstance().getEditUserView());
                     break;
-                case DELETE_USER:
-                    admin_parent.setCenter(ViewFactory.getInstance().getDeleteUserView());
-                    break;
                 case EDIT_USER_ADM:
                     //admin_parent.setCenter(ViewFactory.getInstance().getEditUserAdmView());
                     break;
