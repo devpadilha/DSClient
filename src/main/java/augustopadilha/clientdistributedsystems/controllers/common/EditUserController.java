@@ -48,7 +48,7 @@ public class EditUserController implements Initializable {
         String password = DigestUtils.md5Hex(password_field.getText()).toUpperCase();
 
         if(UserCredentialsValidator.validate(editedUser.getEmail(), password)) {
-            sender.sendEditSelfData(Token.getJwtToken(), ViewFactory.getInstance().getUser().getID(), editedUser.getName(), editedUser.getEmail(), password);
+            sender.sendEditSelfData(ViewFactory.getInstance().getUser().getID(), editedUser.getName(), editedUser.getEmail(), password);
         }
         ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.PROFILE);
     }

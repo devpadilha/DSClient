@@ -1,6 +1,10 @@
 package augustopadilha.clientdistributedsystems.system.connection;
 
 import augustopadilha.clientdistributedsystems.App;
+import augustopadilha.clientdistributedsystems.models.Point;
+import augustopadilha.clientdistributedsystems.models.Segment;
+import augustopadilha.clientdistributedsystems.models.User;
+import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,19 +13,20 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class SendData {
     private ObjectMapper objectMapper = new ObjectMapper();
     Connection connection = App.getConnection();
+
     private JsonNode data;
 
     public JsonNode getData() {
         return data;
     }
-    /* ------------------- Generators ------------------- */
+    /* ------------------------------------------------------------------ Generators ------------------------------------------------------------------ */
     private JsonNode generateFinalData(String action, JsonNode data) {
         this.data = objectMapper.createObjectNode();
         ((ObjectNode) this.getData()).put("action", action);
         ((ObjectNode) this.getData()).set("data", data);
         return this.data;
     }
-
+    /*--------------------------------------------- CRUD USUARIOS ---------------------------------------------------*/
     public JsonNode generateLoginData(String email, String password) throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("email", email);
@@ -38,9 +43,9 @@ public class SendData {
         return generateFinalData("autocadastro-usuario", data);
     }
 
-    public JsonNode generateRegisterData(String token, String name, String email, String password, String type) throws JsonProcessingException {
+    public JsonNode generateRegisterData(String name, String email, String password, String type) throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         ((ObjectNode) data).put("name", name);
         ((ObjectNode) data).put("email", email);
         ((ObjectNode) data).put("password", password);
@@ -48,27 +53,27 @@ public class SendData {
         return generateFinalData("cadastro-usuario", data);
     }
 
-    public JsonNode generateLogoutData(String token) throws JsonProcessingException {
+    public JsonNode generateLogoutData() throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         return generateFinalData("logout", data);
     }
 
-    public JsonNode generateClientListdata(String token) throws JsonProcessingException {
+    public JsonNode generateClientListdata() throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         return generateFinalData("listar-usuarios", data);
     }
 
-    public JsonNode generateProfileData(String token) throws JsonProcessingException {
+    public JsonNode generateProfileData() throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         return generateFinalData("pedido-proprio-usuario", data);
     }
 
-    public JsonNode generateEditSelfData(String token, int id, String name, String email, String password) throws JsonProcessingException {
+    public JsonNode generateEditSelfData(int id, String name, String email, String password) throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         ((ObjectNode) data).put("id", id);
         ((ObjectNode) data).put("name", name);
         ((ObjectNode) data).put("email", email);
@@ -76,16 +81,102 @@ public class SendData {
         return generateFinalData("autoedicao-usuario", data);
     }
 
-    public JsonNode generateDeleteSelfData (String token, String email, String password) throws JsonProcessingException {
+    public JsonNode generateDeleteSelfData (String email, String password) throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", token);
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         ((ObjectNode) data).put("email", email);
         ((ObjectNode) data).put("password", password);
         return generateFinalData("excluir-proprio-usuario", data);
     }
-    /* --------------------------------------------------- */
+    public JsonNode generateEditUserData(int user_id) throws JsonProcessingException {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("user_id", user_id);
+        return generateFinalData("edicao-usuario", data);
+    }
 
-    /* --------------------- Senders --------------------- */
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------- CRUD PONTOS -------------------------------------------------*/
+    public JsonNode generatePointData(String name, String obs){
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("name", name);
+        ((ObjectNode) data).put("obs", obs);
+        return generateFinalData("cadastro-ponto", data);
+    }
+
+    public JsonNode generateListPointsData(){
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        return generateFinalData("listar-pontos", data);
+    }
+
+    public JsonNode generateEditPointData(int id, String name, String obs){
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("id", id);
+        ((ObjectNode) data).put("name", name);
+        ((ObjectNode) data).put("obs", obs);
+        return generateFinalData("edicao-ponto", data);
+    }
+
+    public JsonNode generateAskEditPointData(int id){
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("id", id);
+        return generateFinalData("pedido-edicao-ponto", data);
+    }
+
+    public JsonNode generateDeletePointData(int id){
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("id", id);
+        return generateFinalData("excluir-ponto", data);
+    }
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------ CRUD SEGMENTOS ------------------------------------------------*/
+    public JsonNode generateRegisterSegmentData(Segment segment) {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).set("segmento", objectMapper.convertValue(segment, JsonNode.class));
+        return generateFinalData("cadastro-segmento", data);
+    }
+
+    public JsonNode generateAskEditSegmentData(int id) {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("segmento_id", id);
+        return generateFinalData("pedido-edicao-segmento", data);
+    }
+
+    public JsonNode generateListSegmentsData() {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        return generateFinalData("listar-segmentos", data);
+    }
+
+    public JsonNode generateEditSegmentData(int id,Segment segment) {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("id", id);
+        ((ObjectNode) data).set("segmento", objectMapper.convertValue(segment, JsonNode.class));
+        return generateFinalData("edicao-segmento", data);
+    }
+
+    public JsonNode generateDeleteSegmentData(int id) {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("id", id);
+        return generateFinalData("excluir-segmento", data);
+    }
+    /*---------------------------------------------------------------------------------------------------------------*/
+    /* --------------------------------------------------------------------------------------------------------------------------------------------- */
+
+
+
+    /* ------------------------------------------------------------------ Senders ------------------------------------------------------------------ */
+    /*---------------------------------------------- CRUD USUARIOS --------------------------------------------------*/
     public JsonNode sendLoginData(String email, String password) throws JsonProcessingException {
         String serverResponse = null;
         try {
@@ -106,66 +197,179 @@ public class SendData {
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendRegisterData(String token, String name, String email, String password, String type) throws JsonProcessingException {
+    public JsonNode sendRegisterData(String name, String email, String password, String type) throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateRegisterData(token, name, email, password, type)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateRegisterData(name, email, password, type)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendLogoutData(String token) throws JsonProcessingException {
+    public JsonNode sendLogoutData() throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateLogoutData(token)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateLogoutData()));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendClientListData(String token) throws JsonProcessingException {
+    public JsonNode sendClientListData() throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateClientListdata(token)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateClientListdata()));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendProfileData(String token) throws JsonProcessingException {
+    public JsonNode sendProfileData() throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateProfileData(token)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateProfileData()));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendEditSelfData(String token, int id, String name, String email, String password) throws JsonProcessingException {
+    public JsonNode sendEditSelfData(int id, String name, String email, String password) throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditSelfData(token, id, name, email, password)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditSelfData(id, name, email, password)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendDeleteSelfData(String token, String email, String password) throws JsonProcessingException {
+    public JsonNode sendDeleteSelfData(String email, String password) throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateDeleteSelfData(token, email, password)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateDeleteSelfData(email, password)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
         return stringToJsonNode(serverResponse);
     }
-    /* --------------------------------------------------- */
+
+    public JsonNode sendEditUserData(int user_id) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditUserData(user_id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+    /*----------------------------------------------------------------------------------------------------------------*/
+
+    /*-------------------------------------------------- CRUD PONTOS --------------------------------------------------*/
+    public JsonNode sendPointData(String name, String obs) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generatePointData(name, obs)));
+        } catch(JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendListPointsData() throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateListPointsData()));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendEditPointData(Point point) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditPointData(point.getId(), point.getName(), point.getObs())));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendAskEditPointData(int id) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateAskEditPointData(id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendDeletePointData(int id) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateDeletePointData(id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+    /*----------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------ CRUD SEGMENTOS ------------------------------------------------*/
+    public JsonNode sendRegisterSegmentData(Segment segment) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateRegisterSegmentData(segment)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+    public JsonNode sendAskEditSegmentData(int id) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateAskEditSegmentData(id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+    public JsonNode sendListSegmentsData() throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateListSegmentsData()));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendEditSegmentData(int id, Segment segment) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditSegmentData(id, segment)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendDeleteSegmentData(int id) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateDeleteSegmentData(id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+    /*---------------------------------------------------------------------------------------------------------------*/
+    /* --------------------------------------------------------------------------------------------------------------------------------------------- */
 
     public JsonNode stringToJsonNode (String json) throws JsonProcessingException {
         if (json == null || json.isEmpty()) return null;

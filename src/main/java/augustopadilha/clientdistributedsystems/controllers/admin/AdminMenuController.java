@@ -55,7 +55,7 @@ public class AdminMenuController implements Initializable {
 
     private void onUsersList() throws JsonProcessingException {
         SendData sender = new SendData();
-        JsonNode response = sender.sendClientListData(Token.getJwtToken());
+        JsonNode response = sender.sendClientListData();
         if (response != null) {
             ReceiveData receiver = new ReceiveData(response);
             if (receiver.getError()) {
@@ -69,7 +69,7 @@ public class AdminMenuController implements Initializable {
 
     private void onProfile() throws JsonProcessingException {
         SendData sender = new SendData();
-        response = sender.sendProfileData(Token.getJwtToken());
+        response = sender.sendProfileData();
         if (response != null) {
             ReceiveData receiver = new ReceiveData(response);
             receiver.getUserData();
@@ -85,7 +85,7 @@ public class AdminMenuController implements Initializable {
         Stage stage = (Stage) logout_btn.getScene().getWindow();
 
         SendData sender = new SendData();
-        JsonNode response = sender.sendLogoutData(Token.getJwtToken());
+        JsonNode response = sender.sendLogoutData();
         if (response != null) {
             ReceiveData receiver = new ReceiveData(response);
             if (receiver.getError()) {

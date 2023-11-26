@@ -44,7 +44,7 @@ public class RegisterUserAdmController implements Initializable {
         String password = password_field.getText();
         if (UserCredentialsValidator.registerUserIsValid(name, email, password, userType)) {
             password = DigestUtils.md5Hex(password).toUpperCase();
-            JsonNode response = sender.sendRegisterData(Token.getJwtToken(), name, email, password, userType);
+            JsonNode response = sender.sendRegisterData(name, email, password, userType);
             if (response != null) {
                 ReceiveData receiver = new ReceiveData(response);
                 if (receiver.getError()) {

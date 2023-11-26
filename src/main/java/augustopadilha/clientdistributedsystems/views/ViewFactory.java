@@ -29,7 +29,6 @@ public class ViewFactory {
     private AnchorPane profileView;
     private AnchorPane editUserView;
     private AnchorPane deleteUserView;
-    private User clientUser;
     private User user = null;
 
     // Common views
@@ -127,6 +126,17 @@ public class ViewFactory {
             deleteStage.setTitle("Confirmar exclusão");
             deleteStage.setResizable(false);
             deleteStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showEditUserWindow() {
+        Stage stage = new Stage();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/edituser.fxml"));
+            createStage(loader, "Editar usuário");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -232,9 +242,5 @@ public class ViewFactory {
         usersListView = null;
         //editUserADMView = null;
         //deleteUserADMView = null;
-    }
-
-    public void setClientUser(User clientUser) {
-        this.clientUser = clientUser;
     }
 }

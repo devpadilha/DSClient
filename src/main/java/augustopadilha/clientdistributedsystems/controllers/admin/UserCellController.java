@@ -1,6 +1,8 @@
 package augustopadilha.clientdistributedsystems.controllers.admin;
 
 import augustopadilha.clientdistributedsystems.models.User;
+import augustopadilha.clientdistributedsystems.system.connection.SendData;
+import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.MenuOptions;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -40,7 +42,8 @@ public class UserCellController implements Initializable {
     }
 
     private void onEditUser() throws JsonProcessingException {
-        ViewFactory.getInstance().setClientUser(client);
-        ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.EDIT_USER_ADM);
+        SendData sender = new SendData();
+        sender.sendEditUserData(client.getID());
+        ViewFactory.getInstance().showEditUserWindow();
     }
 }

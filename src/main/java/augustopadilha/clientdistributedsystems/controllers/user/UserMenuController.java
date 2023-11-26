@@ -42,7 +42,7 @@ public class UserMenuController implements Initializable {
         Stage stage = (Stage) logout_btn.getScene().getWindow();
 
         SendData sender = new SendData();
-        JsonNode response = sender.sendLogoutData(Token.getJwtToken());
+        JsonNode response = sender.sendLogoutData();
         if (response != null)
         {
             ReceiveData receiver = new ReceiveData(response);

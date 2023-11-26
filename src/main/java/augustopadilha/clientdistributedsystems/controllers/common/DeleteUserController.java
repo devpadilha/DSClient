@@ -62,7 +62,7 @@ public class DeleteUserController implements Initializable {
 
         SendData sender = new SendData();
 
-        ReceiveData receiver = new ReceiveData(sender.sendDeleteSelfData(Token.getJwtToken(), email, password));
+        ReceiveData receiver = new ReceiveData(sender.sendDeleteSelfData(email, password));
         if(receiver.getError())
             error_lbl.setText(receiver.getMessage());
 
