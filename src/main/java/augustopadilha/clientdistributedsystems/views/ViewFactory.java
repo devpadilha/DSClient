@@ -1,12 +1,13 @@
 package augustopadilha.clientdistributedsystems.views;
 
-import augustopadilha.clientdistributedsystems.controllers.common.DeleteUserController;
+import augustopadilha.clientdistributedsystems.controllers.admin.point.DeletePointController;
+import augustopadilha.clientdistributedsystems.controllers.common.DeleteSelfController;
+import augustopadilha.clientdistributedsystems.models.Point;
+import augustopadilha.clientdistributedsystems.models.Segment;
 import augustopadilha.clientdistributedsystems.models.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -17,19 +18,20 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import javax.swing.*;
-import java.util.TimerTask;
 
 public class ViewFactory {
     private static ViewFactory viewFactory = null;
     private ObservableList<User> clients = null;
+    private ObservableList<Point> points = null;
+    private ObservableList<Segment> segments = null;
     private boolean loginAccountType;
     private AnchorPane profileView;
     private AnchorPane editUserView;
     private AnchorPane deleteUserView;
     private User user = null;
+    private Point point = null;
 
     // Common views
     private final ObjectProperty<MenuOptions> SelectedMenuItem;
@@ -40,6 +42,8 @@ public class ViewFactory {
     // Admin views
     private AnchorPane registerUserView;
     private AnchorPane usersListView;
+    private AnchorPane pointsListView;
+    private AnchorPane segmentsListView;
 
     public ViewFactory() {
         this.loginAccountType = false;
@@ -118,7 +122,7 @@ public class ViewFactory {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/deleteuser.fxml"));
             Parent root = loader.load();
-            DeleteUserController controller = loader.getController();
+            DeleteSelfController controller = loader.getController();
             controller.setProfileStage(profileStage);
 
             Scene scene = new Scene(root);
@@ -126,6 +130,39 @@ public class ViewFactory {
             deleteStage.setTitle("Confirmar exclusão");
             deleteStage.setResizable(false);
             deleteStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showDeletePointView(Point point, Stage listStage) {
+        Stage deleteStage = new Stage();
+        deleteStage.initModality(Modality.APPLICATION_MODAL);
+        //deleteStage.initOwner(listStage);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/point/deletepoint.fxml"));
+            Parent root = loader.load();
+            DeletePointController controller = loader.getController();
+            controller.setPointsListStage(listStage);
+            controller.setPointToDelete(point);
+
+            Scene scene = new Scene(root);
+            deleteStage.setScene(scene);
+            deleteStage.setTitle("Confirmar exclusão");
+            deleteStage.setResizable(false);
+            deleteStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showEditPointWindow() {
+        Stage stage = new Stage();
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/point/editpoint.fxml"));
+            createStage(loader, "Editar ponto");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -170,7 +207,7 @@ public class ViewFactory {
     public AnchorPane getRegisterUserView() {
         if (registerUserView == null) {
             try {
-                registerUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/registeruseradm.fxml")).load();
+                registerUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/user/registeruseradm.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -181,7 +218,7 @@ public class ViewFactory {
     public AnchorPane getUsersListView() {
         if (usersListView == null) {
             try {
-                usersListView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/userslist.fxml")).load();
+                usersListView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/user/userslist.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -189,6 +226,27 @@ public class ViewFactory {
         return usersListView;
     }
 
+    public AnchorPane getPointsListView() {
+        if (pointsListView == null) {
+            try {
+                pointsListView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/point/pointslist.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return pointsListView;
+    }
+
+    public AnchorPane getSegmentsListView() {
+        if (segmentsListView == null) {
+            try {
+                segmentsListView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/segment/segmentslist.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return segmentsListView;
+    }
     /*-------------------------------------------------*/
     public void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(null, message, "Erro", JOptionPane.ERROR_MESSAGE);
@@ -227,11 +285,56 @@ public class ViewFactory {
         return user;
     }
 
+    public Point getPoint() {
+        if(point == null) {
+            point = new Point();
+        }
+        return point;
+    }
+
     public void setUser(JsonNode jsonNode) throws JsonProcessingException {
         if (jsonNode != null) {
             ObjectMapper objectMapper = new ObjectMapper();
             this.user = objectMapper.treeToValue(jsonNode, User.class);
         }
+    }
+
+    public ObservableList<Point> getPoints() {
+        if (points == null) {
+            points = FXCollections.observableArrayList();
+        }
+        return points;
+    }
+
+    public void setPoints(JsonNode jsonNode) throws JsonProcessingException {
+        if (jsonNode != null && jsonNode.isArray()) {
+            ObservableList<Point> points = FXCollections.observableArrayList();
+            ObjectMapper objectMapper = new ObjectMapper();
+            for (JsonNode pointNode : jsonNode) {
+                Point point = objectMapper.treeToValue(pointNode, Point.class);
+                points.add(point);
+            }
+            this.points = points;
+        }
+    }
+
+    public void setSegments(JsonNode jsonNode) throws JsonProcessingException {
+        if (jsonNode != null && jsonNode.isArray()) {
+            ObservableList<Segment> segments = FXCollections.observableArrayList();
+            ObjectMapper objectMapper = new ObjectMapper();
+            for (JsonNode segmentNode : jsonNode) {
+                Segment segment = objectMapper.treeToValue(segmentNode, Segment.class);
+                segments.add(segment);
+            }
+            this.segments = segments;
+        }
+    }
+
+    public ObservableList<Segment> getSegments() {
+        if (segments == null) {
+            segments = FXCollections.observableArrayList();
+        }
+        return segments;
     }
 
     public void resetAllAnchorPanes() {

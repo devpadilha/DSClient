@@ -54,6 +54,22 @@ public class ReceiveData {
         }
     }
 
+    public void getPointsList() throws JsonProcessingException {
+        JsonNode rootNode = jackson.readTree(data.toString());
+        if (data.has("pontos")) {
+            JsonNode jsonNode = rootNode.get("pontos");
+            ViewFactory.getInstance().setPoints(jsonNode);
+        }
+    }
+
+    public void getSegmentsList() throws JsonProcessingException {
+        JsonNode rootNode = jackson.readTree(data.toString());
+        if (data.has("segmentos")) {
+            JsonNode jsonNode = rootNode.get("segmentos");
+            ViewFactory.getInstance().setPoints(jsonNode);
+        }
+    }
+
     public void getUserData() throws JsonProcessingException {
         JsonNode jsonNode = jackson.readTree(data.toString());
         ViewFactory.getInstance().setUser(jsonNode.get("user"));

@@ -1,4 +1,4 @@
-package augustopadilha.clientdistributedsystems.controllers.admin;
+package augustopadilha.clientdistributedsystems.controllers.admin.user;
 
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;

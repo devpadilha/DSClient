@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 public class AdminMenuController implements Initializable {
     public Button user_register_button;
     public Button users_btn;
+    public Button points_btn;
+    public Button segments_btn;
     public Button profile_btn;
     public Button logout_btn;
     public static JsonNode response;
@@ -29,6 +31,20 @@ public class AdminMenuController implements Initializable {
         users_btn.setOnAction(event -> {
             try {
                 onUsersList();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        points_btn.setOnAction(event -> {
+            try {
+                onPointsList();
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        segments_btn.setOnAction(event -> {
+            try {
+                onSegmentsList();
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
@@ -63,6 +79,34 @@ public class AdminMenuController implements Initializable {
             } else {
                 receiver.getClientList();
                 ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.USERS_LIST);
+            }
+        }
+    }
+
+    private void onPointsList() throws JsonProcessingException {
+        SendData sender = new SendData();
+        JsonNode response = sender.sendListPointsData();
+        if (response != null) {
+            ReceiveData receiver = new ReceiveData(response);
+            if (receiver.getError()) {
+                ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
+            } else {
+                receiver.getPointsList();
+                ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.POINTS_LIST);
+            }
+        }
+    }
+
+    private void onSegmentsList() throws JsonProcessingException {
+        SendData sender = new SendData();
+        JsonNode response = sender.sendListSegmentsData();
+        if (response != null) {
+            ReceiveData receiver = new ReceiveData(response);
+            if (receiver.getError()) {
+                ViewFactory.getInstance().showErrorMessage(receiver.getMessage());
+            } else {
+                receiver.getSegmentsList();
+                ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.SEGMENTS_LIST);
             }
         }
     }

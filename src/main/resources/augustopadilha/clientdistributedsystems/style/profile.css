@@ -48,3 +48,17 @@
 .error_label {
     -fx-text-fill: #FF0000;
 }
+
+.obsLbl {
+    -fx-font-size: 2em;
+    -fx-fill: #1A2D3D;
+}
+
+.obs_text_field {
+    -fx-pref-width: 250;
+    -fx-pref-height: 200;
+    -fx-background-color: #FFFFFF;
+    -fx-font-size: 1.3em;
+    -fx-effect: dropshadow(three-pass-box, #AAAAAA, 3, 0, 0, 3);
+
+}

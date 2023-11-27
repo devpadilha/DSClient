@@ -9,4 +9,6 @@ public enum MenuOptions {
     EDIT_USER_ADM,
     DELETE_USER_ADM,
     USERS_LIST,
+    POINTS_LIST,
+    SEGMENTS_LIST,
 }

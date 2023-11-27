@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="200.0" prefWidth="470.0" styleClass="delete_container" stylesheets="@../../style/delete.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.common.DeleteUserController">
+<AnchorPane prefHeight="200.0" prefWidth="470.0" styleClass="delete_container" stylesheets="@../../style/delete.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="augustopadilha.clientdistributedsystems.controllers.common.DeleteSelfController">
     <Label layoutX="62.0" layoutY="14.0" text="Para excluir o usuário, confirme seus dados:">
         <font>
           <Font size="18.0" />

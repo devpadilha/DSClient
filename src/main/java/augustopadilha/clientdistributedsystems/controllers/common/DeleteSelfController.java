@@ -3,7 +3,6 @@ package augustopadilha.clientdistributedsystems.controllers.common;
 import augustopadilha.clientdistributedsystems.models.User;
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
-import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.Initializable;
@@ -16,14 +15,15 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class DeleteUserController implements Initializable {
+public class DeleteSelfController implements Initializable {
     public TextField email_field;
     public TextField password_field;
+
     public Button delete_btn;
     public Label error_lbl;
 
     private User user;
-    protected Stage profileStage;
+    public Stage profileStage;
 
     public void setProfileStage(Stage profileStage) {
         this.profileStage = profileStage;
@@ -65,7 +65,6 @@ public class DeleteUserController implements Initializable {
         ReceiveData receiver = new ReceiveData(sender.sendDeleteSelfData(email, password));
         if(receiver.getError())
             error_lbl.setText(receiver.getMessage());
-
         else {
             profileStage.close();
             ViewFactory.getInstance().showLoginWindow();

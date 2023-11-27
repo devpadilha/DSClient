@@ -1,6 +1,6 @@
 package augustopadilha.clientdistributedsystems.views;
 
-import augustopadilha.clientdistributedsystems.controllers.admin.UserCellController;
+import augustopadilha.clientdistributedsystems.controllers.admin.user.UserCellController;
 import augustopadilha.clientdistributedsystems.models.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListCell;
@@ -15,7 +15,7 @@ public class ClientCellFactory extends ListCell<User> {
             setText(null);
             setGraphic(null);
         } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/usercell.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/user/usercell.fxml"));
             UserCellController controller = new UserCellController(client);
             fxmlLoader.setController(controller);
             setText(null);

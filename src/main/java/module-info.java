@@ -29,4 +29,10 @@ module augustopadilha.clientdistributedsystems {
     exports augustopadilha.clientdistributedsystems.system.utilities;
     exports augustopadilha.clientdistributedsystems.controllers.unlogged;
     opens augustopadilha.clientdistributedsystems.controllers.unlogged to javafx.fxml;
+    exports augustopadilha.clientdistributedsystems.controllers.admin.point;
+    opens augustopadilha.clientdistributedsystems.controllers.admin.point to javafx.fxml;
+    exports augustopadilha.clientdistributedsystems.controllers.admin.user;
+    opens augustopadilha.clientdistributedsystems.controllers.admin.user to javafx.fxml;
+    exports augustopadilha.clientdistributedsystems.controllers.admin.segment;
+    opens augustopadilha.clientdistributedsystems.controllers.admin.segment to javafx.fxml;
 }

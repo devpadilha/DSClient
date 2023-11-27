@@ -1,24 +1,18 @@
 package augustopadilha.clientdistributedsystems.controllers.common;
 
 import augustopadilha.clientdistributedsystems.models.User;
-import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.views.MenuOptions;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ProfileController implements Initializable {
-
     public Label name_lbl;
     public Label email_lbl;
     public Label id_lbl;
@@ -52,8 +46,8 @@ public class ProfileController implements Initializable {
     }
 
     private void onDelete() throws JsonProcessingException {
-        DeleteUserController deleteUserController = new DeleteUserController();
-        deleteUserController.setProfileStage((Stage) delete_btn.getScene().getWindow());
-        ViewFactory.getInstance().showDeleteUserView(deleteUserController.profileStage);
+        DeleteSelfController deleteSelfController = new DeleteSelfController();
+        deleteSelfController.setProfileStage((Stage) delete_btn.getScene().getWindow());
+        ViewFactory.getInstance().showDeleteUserView(deleteSelfController.profileStage);
     }
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="130.0" prefWidth="730.0" style="-fx-border-color: linear-gradient(to right, #1A2D3D, #32495C); -fx-border-width: 3; -fx-border-radius: 5;" styleClass="cell_container" stylesheets="@../../style/usercell.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="130.0" prefWidth="730.0" style="-fx-border-color: linear-gradient(to right, #1A2D3D, #32495C); -fx-border-width: 3; -fx-border-radius: 5;" styleClass="cell_container" stylesheets="@../../../style/usercell.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <VBox layoutX="81.0" layoutY="17.0" prefHeight="96.0" prefWidth="194.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="458.0" AnchorPane.topAnchor="14.0">
       <Label fx:id="name_lbl" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="173.0" text="Nome: Augusto" textAlignment="CENTER" wrapText="true">
          <VBox.margin>
@@ -32,6 +32,7 @@
          </VBox.margin>
       </Label>
    </VBox>
-   <FontAwesomeIconView fill="#1a2d3d" glyphName="USER_CIRCLE" layoutY="43.0" size="50" styleClass="user_icon" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-   <Button fx:id="edit_button" layoutX="513.0" layoutY="46.0" mnemonicParsing="false" prefWidth="217.0" text="Editar" AnchorPane.rightAnchor="30.0" />
+   <FontAwesomeIconView fill="#1a2d3d" glyphName="ADDRESS_BOOK" layoutY="43.0" size="50" styleClass="user_icon" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+   <Button fx:id="edit_btn" layoutX="497.0" layoutY="21.0" mnemonicParsing="false" prefWidth="217.0" text="Editar" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="14.0" />
+   <Button fx:id="delete_btn" layoutX="494.0" layoutY="72.0" mnemonicParsing="false" prefWidth="217.0" styleClass="delete_btn" text="Deletar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0" />
 </AnchorPane>

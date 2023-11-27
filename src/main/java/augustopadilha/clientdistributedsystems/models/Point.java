@@ -5,6 +5,7 @@ public class Point {
     private String name;
     private String obs;
 
+    public Point() {}
     public Point(int id, String name, String obs) {
         this.id = id;
         this.name = name;
@@ -14,14 +15,17 @@ public class Point {
     public int getId() {
         return this.id;
     }
-
-
     public String getName() {
         return this.name;
     }
-
-
     public String getObs() {
         return this.obs;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 }

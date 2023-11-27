@@ -95,6 +95,12 @@ public class SendData {
         return generateFinalData("edicao-usuario", data);
     }
 
+    public JsonNode generateDeleteUserData(int user_id) throws JsonProcessingException {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ((ObjectNode) data).put("user_id", user_id);
+        return generateFinalData("excluir-usuario", data);
+    }
     /*---------------------------------------------------------------------------------------------------------------*/
 
     /*------------------------------------------------- CRUD PONTOS -------------------------------------------------*/
@@ -261,6 +267,16 @@ public class SendData {
         String serverResponse = null;
         try {
             serverResponse = connection.send(objectMapper.writeValueAsString(generateEditUserData(user_id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+
+    public JsonNode sendDeleteUserData(int user_id) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateDeleteUserData(user_id)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
