@@ -14,33 +14,50 @@ public class AdminController implements Initializable {
         ViewFactory.getInstance().getSelectedMenuItem().addListener((observable, oldValue, newValue) -> {
             ViewFactory.getInstance().resetAllAnchorPanes();
             switch (newValue) {
+                case REGISTER_PAGE:
+                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterPageView());
+                    break;
+
+                case REGISTER_USER:
+                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterUserView());
+                    break;
+
+                case REGISTER_POINT:
+                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterPointView());
+                    break;
+
+                case REGISTER_SEGMENT:
+                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterSegmentView());
+                    break;
+
                 case USERS_LIST:
                     admin_parent.setCenter(ViewFactory.getInstance().getUsersListView());
                     break;
 
-                    case POINTS_LIST:
-                        admin_parent.setCenter(ViewFactory.getInstance().getPointsListView());
-                        break;
+                case POINTS_LIST:
+                    admin_parent.setCenter(ViewFactory.getInstance().getPointsListView());
+                    break;
 
-                    case SEGMENTS_LIST:
-                        admin_parent.setCenter(ViewFactory.getInstance().getSegmentsListView());
-                        break;
+                case SEGMENTS_LIST:
+                    admin_parent.setCenter(ViewFactory.getInstance().getSegmentsListView());
+                    break;
 
-                    case PROFILE:
-                        admin_parent.setCenter(ViewFactory.getInstance().getProfileView());
-                        break;
+                case PROFILE:
+                    admin_parent.setCenter(ViewFactory.getInstance().getProfileView());
+                    break;
 
-                    case EDIT_USER:
-                        admin_parent.setCenter(ViewFactory.getInstance().getEditUserView());
-                        break;
+                case EDIT_USER:
+                    admin_parent.setCenter(ViewFactory.getInstance().getEditUserView());
+                    break;
 
-                    case DELETE_USER_ADM:
-                        //admin_parent.setCenter(ViewFactory.getInstance().getDeleteUserAdmView());
-                        break;
+                case DELETE_USER_ADM:
+                    //admin_parent.setCenter(ViewFactory.getInstance().getDeleteUserAdmView());
 
-                        default:
-                            admin_parent.setCenter(ViewFactory.getInstance().getRegisterUserView());
-                            break;
+                    break;
+
+                default:
+                    admin_parent.setCenter(ViewFactory.getInstance().getRegisterPageView());
+                    break;
             }
         });
     }

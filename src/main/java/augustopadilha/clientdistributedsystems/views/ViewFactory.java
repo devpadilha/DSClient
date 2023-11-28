@@ -20,6 +20,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ViewFactory {
     private static ViewFactory viewFactory = null;
@@ -29,7 +32,6 @@ public class ViewFactory {
     private boolean loginAccountType;
     private AnchorPane profileView;
     private AnchorPane editUserView;
-    private AnchorPane deleteUserView;
     private User user = null;
     private Point point = null;
 
@@ -44,6 +46,7 @@ public class ViewFactory {
     private AnchorPane usersListView;
     private AnchorPane pointsListView;
     private AnchorPane segmentsListView;
+    private AnchorPane editPageView;
 
     public ViewFactory() {
         this.loginAccountType = false;
@@ -114,7 +117,7 @@ public class ViewFactory {
         return editUserView;
     }
 
-    public void showDeleteUserView(Stage profileStage) {
+    public void showDeleteSelfView(Stage profileStage) {
         Stage deleteStage = new Stage();
         deleteStage.initModality(Modality.APPLICATION_MODAL);
         deleteStage.initOwner(profileStage);
@@ -135,16 +138,15 @@ public class ViewFactory {
         }
     }
 
-    public void showDeletePointView(Point point, Stage listStage) {
+    public void showDeletePointView(Point point) {
         Stage deleteStage = new Stage();
         deleteStage.initModality(Modality.APPLICATION_MODAL);
-        //deleteStage.initOwner(listStage);
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/point/deletepoint.fxml"));
             Parent root = loader.load();
+
             DeletePointController controller = loader.getController();
-            controller.setPointsListStage(listStage);
             controller.setPointToDelete(point);
 
             Scene scene = new Scene(root);
@@ -156,6 +158,7 @@ public class ViewFactory {
             e.printStackTrace();
         }
     }
+
 
     public void showEditPointWindow() {
         Stage stage = new Stage();
@@ -204,10 +207,43 @@ public class ViewFactory {
         createStage(loader, "Bem-vindo!");
     }
 
+    public AnchorPane getRegisterPageView() {
+        if (editPageView == null) {
+            try {
+                editPageView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/registerpage.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return editPageView;
+    }
+
     public AnchorPane getRegisterUserView() {
         if (registerUserView == null) {
             try {
-                registerUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/user/registeruseradm.fxml")).load();
+                registerUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/user/registeruser.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return registerUserView;
+    }
+
+    public AnchorPane getRegisterPointView() {
+        if (registerUserView == null) {
+            try {
+                registerUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/point/registerpoint.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return registerUserView;
+    }
+
+    public AnchorPane getRegisterSegmentView() {
+        if (registerUserView == null) {
+            try {
+                registerUserView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/segment/registersegment.fxml")).load();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -292,6 +328,8 @@ public class ViewFactory {
         return point;
     }
 
+
+
     public void setUser(JsonNode jsonNode) throws JsonProcessingException {
         if (jsonNode != null) {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -304,6 +342,29 @@ public class ViewFactory {
             points = FXCollections.observableArrayList();
         }
         return points;
+    }
+
+    public ObservableList<Object> getPointsIds() {
+        if(points == null) {
+            points = FXCollections.observableArrayList();
+        }
+        // Criar uma lista de strings contendo os IDs
+        // Adicionar objetos Point e IDs à lista
+        List<Object> pointIds = new ArrayList<>();
+        //pointIds.addAll(points);
+        pointIds.addAll(points.stream().map(Point::getId).collect(Collectors.toList()));
+
+        return FXCollections.observableArrayList(pointIds);
+    }
+
+    public Point getPointById(int id) {
+        if(points == null) {
+            points = FXCollections.observableArrayList();
+        }
+        return points.stream()
+                .filter(point -> point.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public void setPoints(JsonNode jsonNode) throws JsonProcessingException {
@@ -339,11 +400,16 @@ public class ViewFactory {
 
     public void resetAllAnchorPanes() {
         profileView = null;
+        editPageView = null;
         editUserView = null;
-        deleteUserView = null;
         registerUserView = null;
         usersListView = null;
+        pointsListView = null;
         //editUserADMView = null;
         //deleteUserADMView = null;
+    }
+
+    public void setPoint(Point point) {
+        this.point = point;
     }
 }

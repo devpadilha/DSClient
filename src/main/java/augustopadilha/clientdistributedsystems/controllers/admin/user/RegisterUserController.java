@@ -3,7 +3,6 @@ package augustopadilha.clientdistributedsystems.controllers.admin.user;
 import augustopadilha.clientdistributedsystems.system.connection.ReceiveData;
 import augustopadilha.clientdistributedsystems.system.connection.SendData;
 import augustopadilha.clientdistributedsystems.system.utilities.UserCredentialsValidator;
-import augustopadilha.clientdistributedsystems.system.utilities.Token;
 import augustopadilha.clientdistributedsystems.views.ViewFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 import javafx.collections.FXCollections;
@@ -14,7 +13,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class RegisterUserAdmController implements Initializable {
+public class RegisterUserController implements Initializable {
     public TextField name_field;
     public TextField email_field;
     public PasswordField password_field;
@@ -37,14 +36,13 @@ public class RegisterUserAdmController implements Initializable {
 
     private void onRegister() throws Exception {
         SendData sender = new SendData();
-        System.out.println(account_selector.getValue());
         String userType = account_selector.getValue().equals("Administrador") ? "admin" : "user";
         String name = name_field.getText();
         String email = email_field.getText();
         String password = password_field.getText();
         if (UserCredentialsValidator.registerUserIsValid(name, email, password, userType)) {
             password = DigestUtils.md5Hex(password).toUpperCase();
-            JsonNode response = sender.sendRegisterData(name, email, password, userType);
+            JsonNode response = sender.sendRegisterUserData(name, email, password, userType);
             if (response != null) {
                 ReceiveData receiver = new ReceiveData(response);
                 if (receiver.getError()) {

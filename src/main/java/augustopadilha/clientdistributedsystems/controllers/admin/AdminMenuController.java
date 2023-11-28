@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminMenuController implements Initializable {
-    public Button user_register_button;
+    public Button register_button;
     public Button users_btn;
     public Button points_btn;
     public Button segments_btn;
@@ -27,7 +27,7 @@ public class AdminMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) { addListeners(); }
 
     private void addListeners(){
-        user_register_button.setOnAction(event -> onRegisterUser ());
+        register_button.setOnAction(event -> onRegisterPage ());
         users_btn.setOnAction(event -> {
             try {
                 onUsersList();
@@ -65,8 +65,8 @@ public class AdminMenuController implements Initializable {
         });
     }
 
-    private void onRegisterUser() {
-        ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.REGISTER_USER);
+    private void onRegisterPage() {
+        ViewFactory.getInstance().getSelectedMenuItem().set(MenuOptions.REGISTER_PAGE);
     }
 
     private void onUsersList() throws JsonProcessingException {

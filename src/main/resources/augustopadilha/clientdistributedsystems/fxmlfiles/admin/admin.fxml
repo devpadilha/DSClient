@@ -8,7 +8,7 @@
     </left>
 
     <center>
-        <fx:include source="user/registeruseradm.fxml" />
+        <fx:include source="registerpage.fxml" />
     </center>
 
 </BorderPane>

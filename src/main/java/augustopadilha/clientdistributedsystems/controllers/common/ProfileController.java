@@ -48,6 +48,6 @@ public class ProfileController implements Initializable {
     private void onDelete() throws JsonProcessingException {
         DeleteSelfController deleteSelfController = new DeleteSelfController();
         deleteSelfController.setProfileStage((Stage) delete_btn.getScene().getWindow());
-        ViewFactory.getInstance().showDeleteUserView(deleteSelfController.profileStage);
+        ViewFactory.getInstance().showDeleteSelfView(deleteSelfController.profileStage);
     }
 }

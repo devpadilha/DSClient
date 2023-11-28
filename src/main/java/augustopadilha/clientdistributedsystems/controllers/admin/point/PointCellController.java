@@ -30,7 +30,7 @@ public class PointCellController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         name_lbl.setText("Nome: " + point.getName());
         id_lbl.setText("Id: " + point.getId());
-        obs_lbl.setText("Obs: " + point.getObs());
+        obs_lbl.setText("Obs: " + (point.getObs() == null ? "" : point.getObs()));
 
         edit_btn.setOnAction(event -> {
             try {
@@ -50,14 +50,15 @@ public class PointCellController implements Initializable {
     }
 
     private void onEditPoint() throws JsonProcessingException {
-        SendData sender = new SendData();
-        sender.sendEditPointData(point);
+        //SendData sender = new SendData();
+        //sender.sendEditPointData(point);
+        ViewFactory.getInstance().setPoint(point);
         ViewFactory.getInstance().showEditPointWindow();
     }
 
     private void onDeletePoint() throws JsonProcessingException {
         try {
-            ViewFactory.getInstance().showDeletePointView(point, (Stage) name_lbl.getScene().getWindow());
+            ViewFactory.getInstance().showDeletePointView(point);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -7,11 +7,11 @@ public class Segment {
     private String distancia;
     private String obs;
 
-    public Segment(Point originPoint, Point destinyPoint, String direction, String distance, String obs) {
-    this.ponto_origem = originPoint;
-    this.ponto_destino = destinyPoint;
-    this.direcao = direction;
-    this.distancia = distance;
+    public Segment(Point ponto_origem, Point ponto_destino, String direcao, String distancia, String obs) {
+    this.ponto_origem = ponto_origem;
+    this.ponto_destino = ponto_destino;
+    this.direcao = direcao;
+    this.distancia = distancia;
     this.obs = obs;
     }
 
@@ -27,8 +27,12 @@ public class Segment {
         return this.direcao;
     }
 
-    public String getDistance() {
-        return this.distancia;
+    public String getDirecao() {
+        return direcao;
+    }
+
+    public String getDistancia() {
+        return distancia;
     }
 
     public String getObs() {

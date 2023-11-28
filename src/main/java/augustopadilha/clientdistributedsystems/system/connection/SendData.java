@@ -43,7 +43,7 @@ public class SendData {
         return generateFinalData("autocadastro-usuario", data);
     }
 
-    public JsonNode generateRegisterData(String name, String email, String password, String type) throws JsonProcessingException {
+    public JsonNode generateRegisterUserData(String name, String email, String password, String type) throws JsonProcessingException {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
         ((ObjectNode) data).put("name", name);
@@ -104,8 +104,9 @@ public class SendData {
     /*---------------------------------------------------------------------------------------------------------------*/
 
     /*------------------------------------------------- CRUD PONTOS -------------------------------------------------*/
-    public JsonNode generatePointData(String name, String obs){
+    public JsonNode generateRegisterPointData(String name, String obs){
         JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
         ((ObjectNode) data).put("name", name);
         ((ObjectNode) data).put("obs", obs);
         return generateFinalData("cadastro-ponto", data);
@@ -145,7 +146,21 @@ public class SendData {
     public JsonNode generateRegisterSegmentData(Segment segment) {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).set("segmento", objectMapper.convertValue(segment, JsonNode.class));
+        ObjectNode segmentNode = ((ObjectNode) data).putObject("segmento");
+        segmentNode.putObject("ponto_origem")
+                .put("id", segment.getOriginPoint().getId())
+                .put("name", segment.getOriginPoint().getName())
+                .put("obs", segment.getOriginPoint().getObs());
+
+        segmentNode.putObject("ponto_destino")
+                .put("id", segment.getDestinyPoint().getId())
+                .put("name", segment.getDestinyPoint().getName())
+                .put("obs", segment.getDestinyPoint().getObs());
+
+        segmentNode.put("direcao", segment.getDirecao());
+        segmentNode.put("distancia", segment.getDistancia());
+        segmentNode.put("obs", segment.getObs());
+
         return generateFinalData("cadastro-segmento", data);
     }
 
@@ -203,10 +218,10 @@ public class SendData {
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendRegisterData(String name, String email, String password, String type) throws JsonProcessingException {
+    public JsonNode sendRegisterUserData(String name, String email, String password, String type) throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateRegisterData(name, email, password, type)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateRegisterUserData(name, email, password, type)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -285,10 +300,10 @@ public class SendData {
     /*----------------------------------------------------------------------------------------------------------------*/
 
     /*-------------------------------------------------- CRUD PONTOS --------------------------------------------------*/
-    public JsonNode sendPointData(String name, String obs) throws JsonProcessingException {
+    public JsonNode sendRegisterPointData(String name, String obs) throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generatePointData(name, obs)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateRegisterPointData(name, obs)));
         } catch(JsonProcessingException e) {
             throw new RuntimeException(e);
         }

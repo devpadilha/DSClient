@@ -18,4 +18,13 @@ public class PointsListController implements Initializable {
         point_list_view.setCellFactory(studentListView -> new PointCellFactory());
         point_list_view.refresh();
     }
+
+    // DA PRA TENTAR CHAMAR REFRESH MANUALMENTE OU ENTENDER O PORQUE DE NAO ESTAR ATUALIZANDO AUTOMATICAMENTE
+
+    // TENTAR CHAMAR REFRESH AQUI
+    /*
+    public void refreshListView() {
+        point_list_view.refresh();
+    }
+    */
 }

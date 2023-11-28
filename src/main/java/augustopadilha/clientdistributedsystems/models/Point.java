@@ -12,6 +12,11 @@ public class Point {
         this.name = obs;
     }
 
+    public Point objectToPoint(Object object) {
+        Point point = (Point) object;
+        return point;
+    }
+
     public int getId() {
         return this.id;
     }
@@ -27,5 +32,9 @@ public class Point {
     }
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
