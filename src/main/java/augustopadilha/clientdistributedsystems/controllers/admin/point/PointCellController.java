@@ -50,8 +50,6 @@ public class PointCellController implements Initializable {
     }
 
     private void onEditPoint() throws JsonProcessingException {
-        //SendData sender = new SendData();
-        //sender.sendEditPointData(point);
         ViewFactory.getInstance().setPoint(point);
         ViewFactory.getInstance().showEditPointWindow();
     }

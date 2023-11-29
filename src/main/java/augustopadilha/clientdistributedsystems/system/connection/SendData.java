@@ -157,8 +157,8 @@ public class SendData {
                 .put("name", segment.getDestinyPoint().getName())
                 .put("obs", segment.getDestinyPoint().getObs());
 
-        segmentNode.put("direcao", segment.getDirecao());
-        segmentNode.put("distancia", segment.getDistancia());
+        segmentNode.put("direcao", segment.getDirection());
+        segmentNode.put("distancia", segment.getDistance());
         segmentNode.put("obs", segment.getObs());
 
         return generateFinalData("cadastro-segmento", data);
@@ -177,10 +177,10 @@ public class SendData {
         return generateFinalData("listar-segmentos", data);
     }
 
-    public JsonNode generateEditSegmentData(int id,Segment segment) {
+    public JsonNode generateEditSegmentData(Segment segment) {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("id", id);
+        ((ObjectNode) data).put("id", segment.getId());
         ((ObjectNode) data).set("segmento", objectMapper.convertValue(segment, JsonNode.class));
         return generateFinalData("edicao-segmento", data);
     }
@@ -330,16 +330,6 @@ public class SendData {
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendAskEditPointData(int id) throws JsonProcessingException {
-        String serverResponse = null;
-        try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateAskEditPointData(id)));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return stringToJsonNode(serverResponse);
-    }
-
     public JsonNode sendDeletePointData(int id) throws JsonProcessingException {
         String serverResponse = null;
         try {
@@ -380,10 +370,10 @@ public class SendData {
         return stringToJsonNode(serverResponse);
     }
 
-    public JsonNode sendEditSegmentData(int id, Segment segment) throws JsonProcessingException {
+    public JsonNode sendEditSegmentData(Segment segment) throws JsonProcessingException {
         String serverResponse = null;
         try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditSegmentData(id, segment)));
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateEditSegmentData(segment)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

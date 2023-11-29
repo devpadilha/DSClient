@@ -1,20 +1,17 @@
 package augustopadilha.clientdistributedsystems.models;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 public class Point {
-    private int id;
     private String name;
     private String obs;
+    private int id;
 
     public Point() {}
-    public Point(int id, String name, String obs) {
-        this.id = id;
+    public Point(String name, String obs, int id) {
         this.name = name;
-        this.name = obs;
-    }
-
-    public Point objectToPoint(Object object) {
-        Point point = (Point) object;
-        return point;
+        this.obs = obs;
+        this.id = id;
     }
 
     public int getId() {

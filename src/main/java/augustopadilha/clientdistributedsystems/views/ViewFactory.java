@@ -1,6 +1,7 @@
 package augustopadilha.clientdistributedsystems.views;
 
 import augustopadilha.clientdistributedsystems.controllers.admin.point.DeletePointController;
+import augustopadilha.clientdistributedsystems.controllers.admin.segment.DeleteSegmentController;
 import augustopadilha.clientdistributedsystems.controllers.common.DeleteSelfController;
 import augustopadilha.clientdistributedsystems.models.Point;
 import augustopadilha.clientdistributedsystems.models.Segment;
@@ -34,6 +35,7 @@ public class ViewFactory {
     private AnchorPane editUserView;
     private User user = null;
     private Point point = null;
+    private Segment segment = null;
 
     // Common views
     private final ObjectProperty<MenuOptions> SelectedMenuItem;
@@ -159,10 +161,38 @@ public class ViewFactory {
         }
     }
 
+    public void showDeleteSegmentView(Segment segment) {
+        Stage deleteStage = new Stage();
+        deleteStage.initModality(Modality.APPLICATION_MODAL);
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/segment/deletesegment.fxml"));
+            Parent root = loader.load();
+
+            DeleteSegmentController controller = loader.getController();
+            controller.setSegmentToDelete(segment);
+
+            Scene scene = new Scene(root);
+            deleteStage.setScene(scene);
+            deleteStage.setTitle("Confirmar exclusão");
+            deleteStage.setResizable(false);
+            deleteStage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showEditSegmentWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/segment/editsegment.fxml"));
+            createStage(loader, "Editar segmento");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void showEditPointWindow() {
-        Stage stage = new Stage();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/point/editpoint.fxml"));
             createStage(loader, "Editar ponto");
@@ -172,8 +202,6 @@ public class ViewFactory {
     }
 
     public void showEditUserWindow() {
-        Stage stage = new Stage();
-
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/edituser.fxml"));
             createStage(loader, "Editar usuário");
@@ -328,6 +356,13 @@ public class ViewFactory {
         return point;
     }
 
+    public Segment getSegment() {
+        if(segment == null) {
+            segment = new Segment();
+        }
+        return segment;
+    }
+
 
 
     public void setUser(JsonNode jsonNode) throws JsonProcessingException {
@@ -384,7 +419,7 @@ public class ViewFactory {
             ObservableList<Segment> segments = FXCollections.observableArrayList();
             ObjectMapper objectMapper = new ObjectMapper();
             for (JsonNode segmentNode : jsonNode) {
-                Segment segment = objectMapper.treeToValue(segmentNode, Segment.class);
+                Segment segment = Segment.fromJsonString(objectMapper.writeValueAsString(segmentNode));
                 segments.add(segment);
             }
             this.segments = segments;
@@ -405,11 +440,15 @@ public class ViewFactory {
         registerUserView = null;
         usersListView = null;
         pointsListView = null;
+        segmentsListView = null;
         //editUserADMView = null;
         //deleteUserADMView = null;
     }
 
     public void setPoint(Point point) {
         this.point = point;
+    }
+    public void setSegment(Segment segment) {
+        this.segment = segment;
     }
 }

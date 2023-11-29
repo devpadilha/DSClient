@@ -45,7 +45,7 @@ public class RegisterSegmentController implements Initializable {
     }
 
     private void onRegister() throws Exception {
-        Segment segment = new Segment(ViewFactory.getInstance().getPointById((Integer) origin_point_list.getValue()), ViewFactory.getInstance().getPointById((Integer) destiny_point_list.getValue()), (String) direction_selector.getValue(), distance_field.getText(), obs_area.getText());
+        Segment segment = new Segment((String) direction_selector.getValue(), distance_field.getText(), obs_area.getText(), augustopadilha.clientdistributedsystems.views.ViewFactory.getInstance().getPointById((Integer) origin_point_list.getValue()), ViewFactory.getInstance().getPointById((Integer) destiny_point_list.getValue()));
         SendData sender = new SendData();
         JsonNode response = sender.sendRegisterSegmentData(segment);
         if (response != null) {

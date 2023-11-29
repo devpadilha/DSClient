@@ -66,7 +66,7 @@ public class ReceiveData {
         JsonNode rootNode = jackson.readTree(data.toString());
         if (data.has("segmentos")) {
             JsonNode jsonNode = rootNode.get("segmentos");
-            ViewFactory.getInstance().setPoints(jsonNode);
+            ViewFactory.getInstance().setSegments(jsonNode);
         }
     }
 

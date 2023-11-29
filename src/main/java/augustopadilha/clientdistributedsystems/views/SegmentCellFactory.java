@@ -16,7 +16,7 @@ public class SegmentCellFactory extends ListCell<Segment> {
             setGraphic(null);
         } else {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/admin/segment/segmentcell.fxml"));
-            SegmentCellController controller = new SegmentCellController();
+            SegmentCellController controller = new SegmentCellController(segment, segment.getOriginPoint(), segment.getDestinyPoint());
             fxmlLoader.setController(controller);
             setText(null);
             try {

@@ -21,7 +21,7 @@
         </Label>
     </VBox>
     <VBox alignment="CENTER" layoutX="273.0" layoutY="11.0" prefHeight="102.0" prefWidth="217.0" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="8.0">
-        <Label fx:id="obs_lbl" alignment="TOP_LEFT" prefHeight="85.0" prefWidth="189.0" text="Obs:">
+        <Label fx:id="obs_lbl" alignment="TOP_LEFT" prefHeight="85.0" prefWidth="189.0" text="Obs:" wrapText="true">
             <VBox.margin>
                 <Insets />
             </VBox.margin>
