@@ -127,13 +127,6 @@ public class SendData {
         return generateFinalData("edicao-ponto", data);
     }
 
-    public JsonNode generateAskEditPointData(int id){
-        JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("id", id);
-        return generateFinalData("pedido-edicao-ponto", data);
-    }
-
     public JsonNode generateDeletePointData(int id){
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
@@ -164,13 +157,6 @@ public class SendData {
         return generateFinalData("cadastro-segmento", data);
     }
 
-    public JsonNode generateAskEditSegmentData(int id) {
-        JsonNode data = objectMapper.createObjectNode();
-        ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("segmento_id", id);
-        return generateFinalData("pedido-edicao-segmento", data);
-    }
-
     public JsonNode generateListSegmentsData() {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
@@ -180,8 +166,21 @@ public class SendData {
     public JsonNode generateEditSegmentData(Segment segment) {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("id", segment.getId());
-        ((ObjectNode) data).set("segmento", objectMapper.convertValue(segment, JsonNode.class));
+        ((ObjectNode) data).put("segmento_id", segment.getId());
+        ObjectNode segmentNode = ((ObjectNode) data).putObject("segmento");
+        segmentNode.putObject("ponto_origem")
+                .put("id", segment.getOriginPoint().getId())
+                .put("name", segment.getOriginPoint().getName())
+                .put("obs", segment.getOriginPoint().getObs());
+
+        segmentNode.putObject("ponto_destino")
+                .put("id", segment.getDestinyPoint().getId())
+                .put("name", segment.getDestinyPoint().getName())
+                .put("obs", segment.getDestinyPoint().getObs());
+
+        segmentNode.put("direcao", segment.getDirection());
+        segmentNode.put("distancia", segment.getDistance());
+        segmentNode.put("obs", segment.getObs());
         return generateFinalData("edicao-segmento", data);
     }
 
@@ -351,15 +350,7 @@ public class SendData {
         }
         return stringToJsonNode(serverResponse);
     }
-    public JsonNode sendAskEditSegmentData(int id) throws JsonProcessingException {
-        String serverResponse = null;
-        try {
-            serverResponse = connection.send(objectMapper.writeValueAsString(generateAskEditSegmentData(id)));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-        return stringToJsonNode(serverResponse);
-    }
+
     public JsonNode sendListSegmentsData() throws JsonProcessingException {
         String serverResponse = null;
         try {
