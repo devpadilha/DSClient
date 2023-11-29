@@ -121,7 +121,7 @@ public class SendData {
     public JsonNode generateEditPointData(int id, String name, String obs){
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("id", id);
+        ((ObjectNode) data).put("ponto_id", id);
         ((ObjectNode) data).put("name", name);
         ((ObjectNode) data).put("obs", obs);
         return generateFinalData("edicao-ponto", data);
@@ -130,7 +130,7 @@ public class SendData {
     public JsonNode generateDeletePointData(int id){
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("id", id);
+        ((ObjectNode) data).put("ponto_id", id);
         return generateFinalData("excluir-ponto", data);
     }
     /*---------------------------------------------------------------------------------------------------------------*/
@@ -187,7 +187,7 @@ public class SendData {
     public JsonNode generateDeleteSegmentData(int id) {
         JsonNode data = objectMapper.createObjectNode();
         ((ObjectNode) data).put("token", Token.getJwtToken());
-        ((ObjectNode) data).put("id", id);
+        ((ObjectNode) data).put("segmento_id", id);
         return generateFinalData("excluir-segmento", data);
     }
     /*---------------------------------------------------------------------------------------------------------------*/
