@@ -33,6 +33,7 @@ public class ViewFactory {
     private boolean loginAccountType;
     private AnchorPane profileView;
     private AnchorPane editUserView;
+    private AnchorPane routeView;
     private User user = null;
     private Point point = null;
     private Segment segment = null;
@@ -209,6 +210,19 @@ public class ViewFactory {
             e.printStackTrace();
         }
     }
+
+    /*=========================================================== TEP 4 =========================================================================================*/
+    public AnchorPane getShowRouteView() {
+        if (routeView == null) {
+            try {
+                routeView = new FXMLLoader(getClass().getResource("/augustopadilha/clientdistributedsystems/fxmlfiles/common/showroute.fxml")).load();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return routeView;
+    }
+    /*=============================================================================================================================================================*/
     /*-------------------------------------------------*/
 
     /*------------------ User views ------------------*/

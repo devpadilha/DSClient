@@ -191,6 +191,24 @@ public class SendData {
         return generateFinalData("excluir-segmento", data);
     }
     /*---------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------- CRUD ROTAS -------------------------------------------------*/
+    public JsonNode generateAskRouteData(Point originPoint, Point destinyPoint) {
+        JsonNode data = objectMapper.createObjectNode();
+        ((ObjectNode) data).put("token", Token.getJwtToken());
+        ObjectNode routeNode = ((ObjectNode) data).putObject("rota");
+        routeNode.putObject("ponto_origem")
+                .put("id", originPoint.getId())
+                .put("name", originPoint.getName())
+                .put("obs", originPoint.getObs());
+
+        routeNode.putObject("ponto_destino")
+                .put("id", destinyPoint.getId())
+                .put("name", destinyPoint.getName())
+                .put("obs", destinyPoint.getObs());
+        return generateFinalData("pedido-rota", data);
+    }
+    /*---------------------------------------------------------------------------------------------------------------*/
     /* --------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
@@ -375,6 +393,18 @@ public class SendData {
         String serverResponse = null;
         try {
             serverResponse = connection.send(objectMapper.writeValueAsString(generateDeleteSegmentData(id)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return stringToJsonNode(serverResponse);
+    }
+    /*---------------------------------------------------------------------------------------------------------------*/
+
+    /*------------------------------------------------- CRUD ROTAS -------------------------------------------------*/
+    public JsonNode sendAskRouteData(Point originPoint, Point destinyPoint) throws JsonProcessingException {
+        String serverResponse = null;
+        try {
+            serverResponse = connection.send(objectMapper.writeValueAsString(generateAskRouteData(originPoint, destinyPoint)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

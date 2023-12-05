@@ -23,6 +23,7 @@ module augustopadilha.clientdistributedsystems {
     exports augustopadilha.clientdistributedsystems;
     exports augustopadilha.clientdistributedsystems.controllers.admin;
     exports augustopadilha.clientdistributedsystems.controllers.user;
+    exports augustopadilha.clientdistributedsystems.controllers.common;
     exports augustopadilha.clientdistributedsystems.models;
     exports augustopadilha.clientdistributedsystems.views;
     exports augustopadilha.clientdistributedsystems.system.connection;

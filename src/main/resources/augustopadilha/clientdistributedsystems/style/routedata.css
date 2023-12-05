@@ -1,0 +1,9 @@
+.error_label {
+    -fx-text-fill: #FF0000;
+}
+
+.title_text {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-fill: #32495CFF;
+}
